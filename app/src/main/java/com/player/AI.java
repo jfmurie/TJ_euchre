@@ -1,7 +1,8 @@
 package com.player;
 
+import android.util.Pair;
+
 import com.card.Card;
-import com.cardvalues.CardValue;
 import com.hand.Hand;
 import com.suits.Suit;
 
@@ -60,14 +61,14 @@ public class AI implements Player {
     }
 
     @Override
-    public void goAlone(Suit s) {
-        //Todo: this will alert Round class that the other player of this team will be sitting out
-        //      Are we allowing AI's to go alone?
+    public boolean goAlone(Card card) {
+        return false;
     }
 
     @Override
-    public void callTrump(Suit s) {
+    public Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer) {
         //Todo: pass this suit to setTrump() in Round class, when it is made
+        return new Pair<>(null, false);
     }
 
     public void decideTrump(Suit cardUp) {

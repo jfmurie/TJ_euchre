@@ -1,5 +1,7 @@
 package com.player;
 
+import android.util.Pair;
+
 import com.card.Card;
 import com.suits.Suit;
 import com.hand.Hand;
@@ -52,14 +54,15 @@ public class UserPlayer implements Player {
     }
 
     @Override
-    public void goAlone(Suit s) {
-        callTrump(s);
+    public boolean goAlone(Card card) {
         //Todo: Alert Round Class that only 3 people are playing
+        return false;
     }
 
     @Override
-    public void callTrump(Suit s) {
+    public Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer) {
         //Todo: this will alert Round class that the other player of this team will be sitting out
+        return new Pair<>(null, goAlone(topCard));
     }
 
     @Override

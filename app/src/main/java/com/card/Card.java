@@ -24,8 +24,8 @@ public class Card {
     /**
      * If the card is Trump or not
      */
-    public boolean isTrump;  // might want to consider a different approach to this
-
+  // might want to consider a different approach to this
+    public boolean isTrump;
 
     /**
      * Constructor for Card object, sets the suit and value.
