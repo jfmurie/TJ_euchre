@@ -2,14 +2,11 @@ package com.hand;
 
 import java.util.ArrayList;
 import com.card.Card;
-//import com.cardvalues.CardValue;
 import com.suits.*;
 
 public class Hand {
-//    int maxSize = 5;
     ArrayList<Card> hand;
     //cards get added to this when they are dealt
-    //hand.add(new card);
 
     public Hand() {
         hand = new ArrayList<>();
@@ -19,7 +16,6 @@ public class Hand {
         return hand;
     }
 
-    //setter for hand
     public void setHand(ArrayList<Card> newHand) {
         hand = newHand;
     }
@@ -32,7 +28,7 @@ public class Hand {
     //loop through array/arraylist of cards in the hand.
     public boolean hasTrump() {
         for(Card c:hand) {
-            if(c.isTrump){
+            if(c.isTrump()){
                 return true;
             }
         }
@@ -177,7 +173,7 @@ public class Hand {
     public ArrayList<Card> getTrumpCards() {
         ArrayList<Card> trumpInHand = new ArrayList<>();
         for (int k = 0; k < hand.size(); k++) {
-            if (hand.get(k).isTrump) {
+            if (hand.get(k).isTrump()) {
                 trumpInHand.add(hand.get(k));
             }
         }
@@ -200,6 +196,7 @@ public class Hand {
 
     //play card method
     //take in the index of the card removes that card returns the card identifier
+    //could I have it so that it removes the card and adds it to a cards played list to use in trick??
     public Card removeCard(int index){
         return hand.remove(index);
     }
