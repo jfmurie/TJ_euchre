@@ -1,6 +1,7 @@
 package com.player;
 
 import com.card.Card;
+import com.cardvalues.CardValue;
 import com.hand.Hand;
 import com.suits.Suit;
 
@@ -85,34 +86,50 @@ public class AI implements Player {
         return aiHand.getHand().remove(c);  //Todo: change to aiHand.removeCard(c);
     }
 
-    public Card determinePlay(ArrayList<Card> cardsPlayed){
+    public Card determinePlay(ArrayList<Card> cardsPlayed, Suit trump){
         if(aiHand.getHand().size() == 1){ //Todo: aiHand.handSize();
             return playCard(0);
         }
+        int cardIndex = -1;
 
         if(isLead){
             //Todo: if has trump,
             //          check the trump you have
-            //          if has right bower, play it
-            //          else if hrtc == ai's highest trump card, play it
+            //          if hrtc == ai's highest trump card, play it
             //          else play highest nontrump card
             //      else,
             //          play highest nontrump card
 
-            return playCard(0);
+            if(aiHand.hasTrump()){
+                if(aiHand.getHighestTrump().equals(hrtc)){
+                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestTrump());
+                }
+                else{
+                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestNonTrump());
+                }
+            }
+
+            return playCard(cardIndex);
         }
-        //Todo:
-        // if trump led
-        //      if highest trump can take trick, play it
-        //      else play lowest
-        // else if can follow suit & suit led is not trump
-        //      if highest of suit can take trick, play it
-        //      else play lowest
-        // else if hasTrump
-        //      if teammate played highest card, play off
-        //      else if highest trump > highest trump played, play highest trump
-        //      else play off
-        // else play off
+        else{
+            //Todo:
+            // if trump led
+            //      if highest trump can take trick, play it
+            //      else play lowest
+            // else if can follow suit & suit led is not trump
+            //      if highest of suit can take trick, play it
+            //      else play lowest
+            // else if hasTrump
+            //      if teammate played highest card, play off
+            //      else if highest trump > highest trump played, play highest trump
+            //      else play off
+            // else play off
+
+
+
+
+        }
+
 
         return null;
     }
