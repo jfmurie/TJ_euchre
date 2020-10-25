@@ -4,75 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:background="@drawable/background"
-    >
+    tools:context=".MainActivity">
 
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginLeft="151dp"
         android:layout_marginTop="288dp"
+        android:layout_marginEnd="151dp"
+        android:layout_marginRight="151dp"
+        android:layout_marginBottom="395dp"
         android:text="start game"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="151dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/rulesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginLeft="161dp"
+        android:layout_marginTop="406dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginRight="162dp"
+        android:layout_marginBottom="277dp"
         android:text="Rules"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="406dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/optionsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginLeft="161dp"
+        android:layout_marginTop="511dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginRight="162dp"
+        android:layout_marginBottom="172dp"
         android:text="Options"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="511dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/euchreTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="108dp"
+        android:layout_marginLeft="108dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginRight="109dp"
+        android:layout_marginBottom="638dp"
         android:fontFamily="sans-serif"
         android:text="E.U.C.H.R.E."
         android:textColor="#E6E1E1"
         android:textSize="36sp"
         android:typeface="normal"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="45dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="131dp"
         android:layout_height="338dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginBottom="253dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/jack_spade"
-        tools:layout_editor_absoluteX="-3dp"
-        tools:layout_editor_absoluteY="140dp"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="131dp"
         android:layout_height="338dp"
-        app:srcCompat="@drawable/jack_diamond"
-        tools:layout_editor_absoluteX="282dp"
-        tools:layout_editor_absoluteY="140dp" />
+        android:layout_marginTop="140dp"
+        android:layout_marginBottom="253dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/jack_diamond" />
 
     <TextView
         android:id="@+id/titleSubtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:layout_marginLeft="138dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginRight="139dp"
+        android:layout_marginBottom="599dp"
         android:fontFamily="@font/geostar_fill"
         android:text="Ultimate"
         android:textAllCaps="false"
         android:textColor="#FB0000"
         android:textSize="24sp"
         android:textStyle="italic"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="104dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
