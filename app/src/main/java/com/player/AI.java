@@ -34,7 +34,6 @@ public class AI implements Player {
         aiHand = new Hand();
     }
 
-
     @Override
     public int getPlayerNum() {
         return aiNum;
@@ -58,6 +57,10 @@ public class AI implements Player {
         for(Card c: dealtCards){
             aiHand.addCard(c);
         }
+    }
+
+    public void setHrtc(Card hrtc) {
+        this.hrtc = hrtc;
     }
 
     @Override
@@ -134,5 +137,6 @@ public class AI implements Player {
 
         return null;
     }
+
 
 }

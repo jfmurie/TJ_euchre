@@ -1,5 +1,6 @@
 package com.player;
 
+import com.Round.Round;
 import com.card.Card;
 import com.cardvalues.CardValue;
 import com.hand.Hand;
@@ -31,18 +32,18 @@ public class testAI {
 
     @Test
     public void testPlayCard1(){
-            AI ai1 = new AI(1);
-            prepareAIHand(ai1);
+        AI ai1 = new AI(1);
+        prepareAIHand(ai1);
+        ai1.setHrtc(new Card(Suit.DIAMONDS, CardValue.ACE));
+        Card play = ai1.determinePlay(prepareCardsPlayed(), Suit.DIAMONDS);
 
-            Card play = ai1.determinePlay(prepareCardsPlayed(), Suit.DIAMONDS);
-
-            Assert.assertEquals(play.suit, Suit.DIAMONDS);
-            Assert.assertEquals(play.value, CardValue.ACE);
+        Assert.assertEquals(play.suit, Suit.DIAMONDS);
+        Assert.assertEquals(play.value, CardValue.ACE);
     }
 
     private ArrayList<Card> prepareCardsPlayed(){
         ArrayList<Card> cardsPlayed = new ArrayList<>();
-        cardsPlayed.add(new Card(Suit.DIAMONDS, CardValue.JACK));
+        cardsPlayed.add(new Card(Suit.DIAMONDS, CardValue.NINE));
         cardsPlayed.add(new Card(Suit.DIAMONDS, CardValue.QUEEN));
         cardsPlayed.add(new Card(Suit.DIAMONDS, CardValue.KING));
         return cardsPlayed;
@@ -51,9 +52,9 @@ public class testAI {
     private void prepareAIHand(AI ai){
 
         ArrayList<Card> testHand = new ArrayList<>();
-        testHand.add(new Card(Suit.DIAMONDS, CardValue.JACK));
-        testHand.add(new Card(Suit.DIAMONDS, CardValue.QUEEN));
-        testHand.add(new Card(Suit.DIAMONDS, CardValue.KING));
+        testHand.add(new Card(Suit.DIAMONDS, CardValue.ACE));
+        testHand.add(new Card(Suit.HEARTS, CardValue.QUEEN));
+        testHand.add(new Card(Suit.SPADES, CardValue.NINE));
 
 
         ai.getCards(testHand);
