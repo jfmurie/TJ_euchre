@@ -34,7 +34,6 @@ public class Round {
         return trump;
     }
 
-
     public int getTrickIndex() {
         return trickIndex;
     }
@@ -42,7 +41,6 @@ public class Round {
     public void setSitOut(int sitOut) {
         this.sitOut = sitOut;
     }
-
 
     /**
      * Loops through the players until one calls trump.  Implemented with screw the dealer
@@ -55,7 +53,7 @@ public class Round {
         Suit suit;
         Boolean goAlone;
         boolean turnedDown = false;
-        int playerIndex = dealerIndex + 1 % 4;
+        int playerIndex = (dealerIndex + 1) % 4;
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
@@ -66,10 +64,9 @@ public class Round {
                 if (suit != null) {
                     this.trump = suit;
 
-                    // @TODO this
-//                    if(! turnedDown) {
-//                        pickItUp(dealer, card)
-//                    }
+                    if(!turnedDown) {
+                        players[playerIndex].pickItUp(turnedUp);
+                    }
 
                     if (goAlone) {
                         this.sitOut = playerIndex + 2 % 4;
@@ -77,9 +74,16 @@ public class Round {
                     return;
                 }
 
-                playerIndex += 1 % 4;
+                playerIndex = (playerIndex + 1) % 4;
             }
             turnedDown = true;
         }
     }
+
+
+    public void playRound(){
+        //Todo: run through 5 tricks
+    }
+
+
 }

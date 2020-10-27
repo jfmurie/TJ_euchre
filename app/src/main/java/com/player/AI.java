@@ -3,6 +3,7 @@ package com.player;
 import android.util.Pair;
 
 import com.card.Card;
+import com.cardvalues.CardValue;
 import com.hand.Hand;
 import com.suits.Suit;
 
@@ -10,28 +11,31 @@ import java.util.ArrayList;
 
 public class AI implements Player {
     private int aiNum;
+    private int teammateNum;
     private boolean isLead;
     private Hand aiHand;
-
-    //This will probably end up in Round Class as we go forward
-    private Card hrtc; //Highest Remaining Trump Card
+    //This may end up in Round Class as we go forward
+    private Pair<Suit, CardValue> HighestRemainingTrumpCard;
 
     public AI(){
-        aiNum = 1;
-        isLead = false;
-        aiHand = new Hand();
+        this.aiNum = 1;
+        this.teammateNum = 3;
+        this.isLead = false;
+        this.aiHand = new Hand();
     }
 
     public AI(int num){
-        aiNum = num;
-        isLead = false;
-        aiHand = new Hand();
+        this.aiNum = num;
+        this.teammateNum = (this.aiNum + 2) % 4;
+        this.isLead = false;
+        this.aiHand = new Hand();
     }
 
     public AI(int num, boolean lead){
-        aiNum = num;
-        isLead = lead;
-        aiHand = new Hand();
+        this.aiNum = num;
+        this.teammateNum = (this.aiNum + 2) % 4;
+        this.isLead = lead;
+        this.aiHand = new Hand();
     }
 
     @Override
@@ -53,14 +57,12 @@ public class AI implements Player {
     public ArrayList<Card> getPlayerHand() { return aiHand.getHand(); }
 
     @Override
-    public void getCards(ArrayList<Card> dealtCards) {
-        for(Card c: dealtCards){
-            aiHand.addCard(c);
-        }
+    public void recieveCardFromDealer(Card dealtCard) {
+        aiHand.addCard(dealtCard);
     }
 
-    public void setHrtc(Card hrtc) {
-        this.hrtc = hrtc;
+    public void setHighestRemainingTrumpCard(Pair<Suit, CardValue> hrtc) {
+        this.HighestRemainingTrumpCard = hrtc;
     }
 
     @Override
@@ -70,50 +72,80 @@ public class AI implements Player {
 
     @Override
     public Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer) {
-        //Todo: pass this suit to setTrump() in Round class, when it is made
+        //Todo
+
+        if(dealer){
+            if(topCardTurnedDown){
+
+            }
+            else{
+
+            }
+        }
+        else {
+            if(topCardTurnedDown){
+
+            }
+            else{
+
+            }
+        }
+
+
+        return decideTrump(topCard.suit, topCardTurnedDown);
+    }
+
+    public Pair<Suit, Boolean> decideTrump(Suit cardUp, boolean topCardTurnedDown) {
+        //Todo
         return new Pair<>(null, false);
     }
 
-    public void decideTrump(Suit cardUp) {
-        //Todo:
-    }
-
-    public void decideTrump() {
-        //Todo:
+    @Override
+    public Card playCard(ArrayList<Card> cardsPlayed, Suit trump) {
+        return determinePlay(cardsPlayed, trump);
     }
 
     @Override
-    public Card playCard(int c) {
-        if(c < 0 || c > aiHand.getHand().size()){
-            throw new IndexOutOfBoundsException("This card does not exist.");
-        }
-        return aiHand.getHand().remove(c);  //Todo: change to aiHand.removeCard(c);
+    public Card playCard(){
+        return null;
     }
 
+    /**
+     *
+     * @param cardsPlayed
+     * @param trump
+     * @return
+     */
     public Card determinePlay(ArrayList<Card> cardsPlayed, Suit trump){
-        if(aiHand.getHand().size() == 1){ //Todo: aiHand.handSize();
-            return playCard(0);
+        if(aiHand.handSize() == 1) {
+            return aiHand.removeCard(0);
         }
         int cardIndex = -1;
 
         if(isLead){
-            //Todo: if has trump,
-            //          check the trump you have
-            //          if hrtc == ai's highest trump card, play it
-            //          else play highest nontrump card
-            //      else,
-            //          play highest nontrump card
-
+            /* if player has trump then
+             *      if HighestRemainingTrumpCard == ai's highest trump card,
+             *          play it
+             *      else
+             *          play highest nontrump card
+             * else,
+             *      play highest nontrump card
+             */
             if(aiHand.hasTrump()){
-                if(aiHand.getHighestTrump().equals(hrtc)){
-                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestTrump());
+                Card highestTrump = aiHand.getHighestTrump();
+                if(highestTrump.suit == HighestRemainingTrumpCard.first
+                        && highestTrump.getValue() == HighestRemainingTrumpCard.second){
+
+                    cardIndex = aiHand.getHand().indexOf(highestTrump);
                 }
                 else{
                     cardIndex = aiHand.getHand().indexOf(aiHand.getHighestNonTrump());
                 }
             }
-
-            return playCard(cardIndex);
+            else {
+                cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump());
+            }
+            return aiHand.removeCard(cardIndex);
         }
         else{
             //Todo:
@@ -129,14 +161,19 @@ public class AI implements Player {
             //      else play off
             // else play off
 
-
-
-
         }
-
-
         return null;
     }
 
+    @Override
+    public void pickItUp(Card topCard){
+        int lowestCard = aiHand.getHand().indexOf(aiHand.getLowestNonTrump());
+        aiHand.removeCard(lowestCard);
+        recieveCardFromDealer(topCard);
+    }
 
+    @Override
+    public boolean isAI(){
+        return true;
+    }
 }

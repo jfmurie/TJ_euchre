@@ -1,14 +1,13 @@
 package com.player;
 
-import com.Round.Round;
+import android.util.Pair;
+
 import com.card.Card;
 import com.cardvalues.CardValue;
-import com.hand.Hand;
 import com.suits.Suit;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,9 @@ public class testAI {
         testCards.add(new Card(Suit.DIAMONDS, CardValue.KING));
 
         AI ai1 = new AI(1);
-        ai1.getCards(testCards);
+        for(Card c: testCards){
+            ai1.recieveCardFromDealer(c);
+        }
 
         for(Card c : ai1.getPlayerHand()){
             Assert.assertEquals(c, testCards.remove(0));
@@ -34,7 +35,7 @@ public class testAI {
     public void testPlayCard1(){
         AI ai1 = new AI(1);
         prepareAIHand(ai1);
-        ai1.setHrtc(new Card(Suit.DIAMONDS, CardValue.ACE));
+        ai1.setHighestRemainingTrumpCard(new Pair<Suit, CardValue>(Suit.DIAMONDS, CardValue.ACE));
         Card play = ai1.determinePlay(prepareCardsPlayed(), Suit.DIAMONDS);
 
         Assert.assertEquals(play.suit, Suit.DIAMONDS);
@@ -56,8 +57,9 @@ public class testAI {
         testHand.add(new Card(Suit.HEARTS, CardValue.QUEEN));
         testHand.add(new Card(Suit.SPADES, CardValue.NINE));
 
-
-        ai.getCards(testHand);
+        for(Card c: testHand){
+            ai.recieveCardFromDealer(c);
+        }
     }
 
 

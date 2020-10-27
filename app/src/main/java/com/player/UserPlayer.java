@@ -25,7 +25,6 @@ public class UserPlayer implements Player {
         playerHand = new Hand();
     }
 
-
     @Override
     public int getPlayerNum() {
         return playerNum;
@@ -47,29 +46,44 @@ public class UserPlayer implements Player {
     }
 
     @Override
-    public void getCards(ArrayList<Card> dealtCards) {
-        for(Card c: dealtCards){
-            playerHand.addCard(c);
-        }
+    public void recieveCardFromDealer(Card dealtCard) {
+        playerHand.addCard(dealtCard);
     }
 
     @Override
     public boolean goAlone(Card card) {
         //Todo: Alert Round Class that only 3 people are playing
+        // AGAIN GET USER INPUT SOMEHOW
         return false;
     }
 
     @Override
     public Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer) {
         //Todo: this will alert Round class that the other player of this team will be sitting out
+        // SOMEHOW SOMEWAY GET USER INPUT :(
         return new Pair<>(null, goAlone(topCard));
     }
 
     @Override
-    public Card playCard(int c) {
-        if(c < 0 || c > playerHand.getHand().size()){   //Todo: change to playerHand.handSize()
-            throw new IndexOutOfBoundsException("This card does not exist.");
-        }
-        return playerHand.getHand().remove(c); //Todo: change to playerHand.removeCard(c)
+    public Card playCard() {
+        int c = -1;
+        //Todo: get user input... idk how
+        return playerHand.removeCard(c);
+    }
+
+    @Override
+    public Card playCard(ArrayList<Card> cardsPlayed, Suit trump){
+        return null;
+    }
+
+    @Override
+    public void pickItUp(Card topCard){
+        //Todo: get user input on which card to remove
+        recieveCardFromDealer(topCard);
+    }
+
+    @Override
+    public boolean isAI(){
+        return false;
     }
 }

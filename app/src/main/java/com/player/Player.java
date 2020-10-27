@@ -15,7 +15,7 @@ public interface Player {
     void setLead(boolean lead);
 
     ArrayList<Card> getPlayerHand();
-    void getCards(ArrayList<Card> dealtCards);
+    void recieveCardFromDealer(Card dealtCard);
 
     boolean goAlone(Card card);
 
@@ -32,5 +32,16 @@ public interface Player {
      */
     Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer);
 
-    Card playCard(int c);
+    Card playCard();
+
+    Card playCard(ArrayList<Card> cardsPlayed, Suit trump);
+
+    /**
+     * When player is the dealer and another calls trump as the top card,
+     * the player picks up the top card and discards another.
+     * @param topCard the card flipped up.
+     */
+    void pickItUp(Card topCard);
+
+    boolean isAI();
 }
