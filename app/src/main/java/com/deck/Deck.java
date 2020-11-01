@@ -2,6 +2,7 @@ package com.deck;
 
 import com.card.Card;
 import com.cardvalues.CardValue;
+import com.player.Player;
 import com.suits.Suit;
 
 import java.util.ArrayList;
@@ -49,4 +50,37 @@ public class Deck {
     public void shuffleDeck() {
         Collections.shuffle(this.deck);
     }
+
+    public Card getTopCard(){
+        return this.deck.get(this.deck.size() - 1);
+    }
+
+    /**
+     * This method deals 5 cards to each player according to game rules
+     *
+     * @param players the players in the game
+     * @param dealerIndex index of player who is dealing
+     */
+    public void deal(Player[] players, int dealerIndex){
+        int playerIndex = (dealerIndex + 1) % 4;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 4; j++) {
+
+                //i = time dealt (0 or 1)
+                //player index (0 - 3)
+                //if player dealt 1st and not on dealer's team, give three, etc.
+                if((i + j)% 2 == 0){
+                    players[playerIndex].recieveCardFromDealer(getTopCard());
+                    players[playerIndex].recieveCardFromDealer(getTopCard());
+                    players[playerIndex].recieveCardFromDealer(getTopCard());
+                }
+                else{
+                    players[playerIndex].recieveCardFromDealer(getTopCard());
+                    players[playerIndex].recieveCardFromDealer(getTopCard());
+                }
+            }
+            playerIndex = (playerIndex + 1) % 4;
+        }
+    }
+
 }
