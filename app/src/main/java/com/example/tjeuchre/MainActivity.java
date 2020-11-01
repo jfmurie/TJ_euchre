@@ -19,4 +19,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
 
     }
+
+    public void gameActivity(View v)
+    {
+        Intent i = new Intent(this, GameScreen.class);
+        startActivity(i);
+
+    }
 }
