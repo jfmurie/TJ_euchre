@@ -60,7 +60,7 @@ public class Team {
         else if(this.team[1] == player) {
             return this.team[0];
         }
-
+        // @TODO testing baby
         // should I throw an exception ?
         else {
             return null;
@@ -78,6 +78,7 @@ public class Team {
             this.teamScore += awarded_points;
             return this.teamScore;
         }
+        // @TODO testing baby
         // should I throw an exception?
         else return awarded_points;
     }
