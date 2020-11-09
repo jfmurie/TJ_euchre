@@ -172,8 +172,10 @@ public class AI implements Player {
              *      else play off
              * else play off
              */
+            Suit suitLead = cardsPlayed.get(0).getSuit();
 
-            if (cardsPlayed.get(0).getSuit() == trump) {
+
+            if (suitLead == trump) {
                 if (!aiHand.hasTrump()) {
                     cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump());
                 }
@@ -193,8 +195,15 @@ public class AI implements Player {
                 }
 
             }
-            //Todo: Need a hasSuit(Suit s) method in Hand class
-            // else if(aiHand.hasSuit(cardsPlayed.get(0).getSuit()))
+            else if(aiHand.hasSuit(suitLead)){
+                if(aiHand.getLowestofSuit(suitLead).getValue().getNumericalValue() <
+                        cardsPlayed.get(getCurrentWinningCardIndex(cardsPlayed,trump)).getValue().getNumericalValue()){
+                    cardIndex = aiHand.getHand().indexOf(aiHand.getLowestofSuit(suitLead));
+                }
+                else {
+                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestofSuit(suitLead));
+                }
+            }
             else if(aiHand.hasTrump()){
                 int tm8PlayIndex = getTeammatesPlayIndex(cardsPlayed.size());
                 int winningCardIndex = getCurrentWinningCardIndex(cardsPlayed, trump);

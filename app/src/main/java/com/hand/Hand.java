@@ -167,7 +167,54 @@ public class Hand {
             }
         }
         return nontrump.get(lowNTIndex);
+    }
 
+    public Card getHighestofSuit(Suit suit){
+        //if has no cards
+        if (hand.isEmpty()){
+            return null;
+        }
+
+        Card highest = null;
+
+        //2 or more trump cards looks for highest
+        for(Card c: hand){
+            if(c.getSuit() == suit){
+                if(highest == null){
+                    highest = c;
+                    continue;
+                }
+                if(c.getValue().getNumericalValue() > highest.getValue().getNumericalValue()){
+                    highest = c;
+                }
+            }
+        }
+
+        return highest;
+    }
+
+    public Card getLowestofSuit(Suit suit){
+        //if has no cards
+        if (hand.isEmpty()){
+            return null;
+        }
+
+        Card highest = null;
+
+        //2 or more trump cards looks for highest
+        for(Card c: hand){
+            if(c.getSuit() == suit){
+                if(highest == null){
+                    highest = c;
+                    continue;
+                }
+                if(c.getValue().getNumericalValue() < highest.getValue().getNumericalValue()){
+                    highest = c;
+                }
+            }
+        }
+
+        return highest;
     }
 
     public ArrayList<Card> getTrumpCards() {
@@ -193,6 +240,7 @@ public class Hand {
     public int handSize() {
         return hand.size();
     }
+
 
     //play card method
     //take in the index of the card removes that card returns the card identifier
