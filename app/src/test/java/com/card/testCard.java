@@ -3,9 +3,8 @@ package com.card;
 import com.cardvalues.CardValue;
 import com.suits.Suit;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
 
 public class testCard {
 
@@ -14,8 +13,7 @@ public class testCard {
     @Test
     public void testIsTrump_nineOfHearts_trumpIsHearts_returnsTrue() {
         card = new Card(Suit.HEARTS, CardValue.NINE);
-        card.setIsTrump(Suit.HEARTS);
-        assertTrue(card.isTrump());
+        Assert.assertTrue(card.isTrump(Suit.HEARTS));
     }
 
 

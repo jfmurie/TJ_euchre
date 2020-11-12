@@ -1,9 +1,8 @@
 package com.player;
 
-import android.util.Pair;
+import android.support.v4.util.Pair;
 
 import com.card.Card;
-import com.hand.Hand;
 import com.suits.Suit;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public interface Player {
     void setLead(boolean lead);
 
     ArrayList<Card> getPlayerHand();
-    void recieveCardFromDealer(Card dealtCard);
+    void receiveCardFromDealer(Card dealtCard);
 
     boolean goAlone(Card card);
 

@@ -1,6 +1,10 @@
 package com.Round;
 
-import android.util.Pair;
+/* the original statement: android.util.Pair
+ * changed because that import doesn't work with unit testing
+ * https://stackoverflow.com/questions/35979397/android-immediately-created-pair-elements-are-null
+ */
+import android.support.v4.util.Pair;
 
 import com.Trick.Trick;
 import com.card.Card;
@@ -68,7 +72,7 @@ public class Round {
                         players[playerIndex].pickItUp(turnedUp);
                     }
 
-                    if (goAlone) {
+                    if (goAlone != null && goAlone) {
                         this.sitOut = playerIndex + 2 % 4;
                     }
                     return;

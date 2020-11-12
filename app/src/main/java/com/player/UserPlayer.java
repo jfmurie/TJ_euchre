@@ -1,6 +1,10 @@
 package com.player;
 
-import android.util.Pair;
+/* the original statement: android.util.Pair
+ * changed because that import doesn't work with unit testing
+ * https://stackoverflow.com/questions/35979397/android-immediately-created-pair-elements-are-null
+ */
+import android.support.v4.util.Pair;
 
 import com.card.Card;
 import com.suits.Suit;
@@ -46,7 +50,7 @@ public class UserPlayer implements Player {
     }
 
     @Override
-    public void recieveCardFromDealer(Card dealtCard) {
+    public void receiveCardFromDealer(Card dealtCard) {
         playerHand.addCard(dealtCard);
     }
 
@@ -79,7 +83,7 @@ public class UserPlayer implements Player {
     @Override
     public void pickItUp(Card topCard){
         //Todo: get user input on which card to remove
-        recieveCardFromDealer(topCard);
+        receiveCardFromDealer(topCard);
     }
 
     @Override

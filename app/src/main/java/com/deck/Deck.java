@@ -70,13 +70,13 @@ public class Deck {
                 //player index (0 - 3)
                 //if player dealt 1st and not on dealer's team, give three, etc.
                 if((i + j)% 2 == 0){
-                    players[playerIndex].recieveCardFromDealer(getTopCard());
-                    players[playerIndex].recieveCardFromDealer(getTopCard());
-                    players[playerIndex].recieveCardFromDealer(getTopCard());
+                    players[playerIndex].receiveCardFromDealer(getTopCard());
+                    players[playerIndex].receiveCardFromDealer(getTopCard());
+                    players[playerIndex].receiveCardFromDealer(getTopCard());
                 }
                 else{
-                    players[playerIndex].recieveCardFromDealer(getTopCard());
-                    players[playerIndex].recieveCardFromDealer(getTopCard());
+                    players[playerIndex].receiveCardFromDealer(getTopCard());
+                    players[playerIndex].receiveCardFromDealer(getTopCard());
                 }
             }
             playerIndex = (playerIndex + 1) % 4;
