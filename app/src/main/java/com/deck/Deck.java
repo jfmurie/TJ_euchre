@@ -16,6 +16,7 @@ import java.util.Collections;
 public class Deck {
 
     public final ArrayList<Card> deck;
+    private int topCardIndex;
 
 
     /**
@@ -38,22 +39,39 @@ public class Deck {
             }
         }
 
+        this.topCardIndex = deck.size() - 1;
+
     }
 
     /**
-     * TODO: decide if this should return void or the deck
-     * Shuffles the deck using Collections.shuffle(list) method.
+     * Shuffles the deck using Collections.shuffle(list) method.  Also resets the top card
+     * index to 0.  This method should always be called before each deal.
      *
      * https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html#shuffle(java.util.List)
      *
      */
     public void shuffleDeck() {
         Collections.shuffle(this.deck);
+        this.topCardIndex = 0;
     }
 
+    /**
+     * Gets the top card of the deck.
+     *
+     * @return  Top card of the deck
+     */
     public Card getTopCard(){
-        return this.deck.get(this.deck.size() - 1);
+        return this.deck.get(this.topCardIndex--);
     }
+
+//    public Card deal(int dealerIndex, Player[] players) {
+//        for (int i = 0; i < 20; i++) {
+//            Card dealtCard = this.getTopCard();
+//            players[(i + dealerIndex + 1) % 4].receiveCardFromDealer(dealtCard);
+//        }
+//
+//        return this.getTopCard();
+//    }
 
     /**
      * This method deals 5 cards to each player according to game rules
@@ -61,7 +79,7 @@ public class Deck {
      * @param players the players in the game
      * @param dealerIndex index of player who is dealing
      */
-    public void deal(Player[] players, int dealerIndex){
+    public Card deal(Player[] players, int dealerIndex){
         int playerIndex = (dealerIndex + 1) % 4;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
@@ -81,6 +99,8 @@ public class Deck {
             }
             playerIndex = (playerIndex + 1) % 4;
         }
+
+        return this.getTopCard();
     }
 
 }

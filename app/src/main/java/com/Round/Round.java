@@ -10,6 +10,7 @@ import com.Trick.Trick;
 import com.card.Card;
 import com.player.Player;
 import com.suits.Suit;
+import com.team.Team;
 
 public class Round {
 
@@ -85,8 +86,8 @@ public class Round {
     }
 
 
-    public void playRound(){
-        //Todo: run through 5 tricks
+    public void playRound(Team team1, Team team2, Player[] players, int dealerIndex){
+        //TODO: run through 5 tricks
     }
 
 
