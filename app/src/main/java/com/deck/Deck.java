@@ -64,14 +64,6 @@ public class Deck {
         return this.deck.get(this.topCardIndex--);
     }
 
-//    public Card deal(int dealerIndex, Player[] players) {
-//        for (int i = 0; i < 20; i++) {
-//            Card dealtCard = this.getTopCard();
-//            players[(i + dealerIndex + 1) % 4].receiveCardFromDealer(dealtCard);
-//        }
-//
-//        return this.getTopCard();
-//    }
 
     /**
      * This method deals 5 cards to each player according to game rules
