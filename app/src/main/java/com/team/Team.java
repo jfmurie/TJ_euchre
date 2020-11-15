@@ -2,6 +2,9 @@ package com.team;
 
 import com.player.Player;
 
+/**
+ * Team Class implementation
+ */
 public class Team {
 
     /**
