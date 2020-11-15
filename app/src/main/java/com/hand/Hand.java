@@ -279,7 +279,7 @@ public class Hand {
         return new Pair<>(suits[indexOfMost], numOfSuits[indexOfMost]);
     }
 
-    public int getCountOfSuit(Suit s){
+    public int getCountOfSuit(Suit s, boolean isTrump){
         if(this.hand == null || this.hand.size() == 0){
             return -1;
         }
@@ -287,10 +287,14 @@ public class Hand {
         for(Card c:this.hand){
             if(c.getSuit() == s){
                 count++;
+            } else if(isTrump && c.isLeftBower(s)){
+                count++;
             }
         }
         return count;
     }
+
+
 
     public boolean hasCard(Suit s, CardValue v){
         for(Card c:this.hand) {

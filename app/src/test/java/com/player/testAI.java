@@ -40,26 +40,72 @@ public class testAI {
     }
 
     /**
-     * Tests the AI to lead Trump when it has the HighestRemainingTrump
+     * Tests the AI will play its last card
      */
     @Test
     public void testPlayCard1(){
+        AI ai1 = new AI(1);
+
+        //Prepare Hand
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.KING));
+
+        //Prepare cardsPlayed
+        ArrayList<Card> cardsPlayed = new ArrayList<>();
+        cardsPlayed.add(new Card(Suit.DIAMONDS, CardValue.TEN));
+        cardsPlayed.add(new Card(Suit.CLUBS, CardValue.TEN));
+
+        ai1.setLead(false);
+        ai1.setHighestRemainingTrumpCard(Suit.CLUBS, CardValue.NINE);
+
+        Card play = ai1.determinePlay(cardsPlayed, Suit.CLUBS);
+
+        Assert.assertEquals(Suit.DIAMONDS, play.getSuit());
+        Assert.assertEquals(CardValue.KING, play.getValue());
+    }
+
+    /**
+     * Tests the AI to lead highest non trump card when it does NOT have trump
+     */
+    @Test
+    public void testPlayCard2(){
+        AI ai1 = new AI(1);
+
+        //Prepare Hand
+        ai1.receiveCardFromDealer(new Card(Suit.SPADES, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.ACE));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.KING));
+
+        //Prepare cardsPlayed, its empty because ai is leading
+        ArrayList<Card> cardsPlayed = new ArrayList<>();
+
+        ai1.setLead(true);
+        ai1.setHighestRemainingTrumpCard(Suit.HEARTS, CardValue.JACK);
+
+        Card play = ai1.determinePlay(cardsPlayed, Suit.HEARTS);
+
+        Assert.assertEquals(Suit.DIAMONDS, play.getSuit());
+        Assert.assertEquals(CardValue.ACE, play.getValue());
+    }
+
+    /**
+     * Tests the AI to lead Trump when it has the HighestRemainingTrump
+     */
+    @Test
+    public void testPlayCard3(){
         Pair<Integer, Double> p = new Pair<>(1, 1.0);
 
         AI ai1 = new AI(1);
 
         //Prepare Hand
-        ArrayList<Card> testHand = new ArrayList<>();
-        testHand.add(new Card(Suit.CLUBS, CardValue.JACK));
-        testHand.add(new Card(Suit.CLUBS, CardValue.QUEEN));
-        testHand.add(new Card(Suit.CLUBS, CardValue.TEN));
-        testHand.add(new Card(Suit.DIAMONDS, CardValue.KING));
-        testHand.add(new Card(Suit.HEARTS, CardValue.KING));
-        for(Card c: testHand){
-            ai1.receiveCardFromDealer(c);
-        }
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.KING));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
 
-        //Prepare cardsPlayed
+        //Prepare cardsPlayed, it's empty here
         ArrayList<Card> cardsPlayed = new ArrayList<>();
 
         ai1.setLead(true);
@@ -75,21 +121,18 @@ public class testAI {
      * Tests the AI to lead highest non trump card when it does NOT have the HighestRemainingTrump
      */
     @Test
-    public void testPlayCard2(){
+    public void testPlayCard4(){
         AI ai1 = new AI(1);
 
         //Prepare Hand
-        ArrayList<Card> testHand = new ArrayList<>();
-        testHand.add(new Card(Suit.SPADES, CardValue.JACK));
-        testHand.add(new Card(Suit.CLUBS, CardValue.QUEEN));
-        testHand.add(new Card(Suit.CLUBS, CardValue.TEN));
-        testHand.add(new Card(Suit.DIAMONDS, CardValue.KING));
-        testHand.add(new Card(Suit.HEARTS, CardValue.KING));
-        for(Card c: testHand){
-            ai1.receiveCardFromDealer(c);
-        }
+        ai1.receiveCardFromDealer(new Card(Suit.SPADES, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.KING));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
 
-        //Prepare cardsPlayed
+
+        //Prepare cardsPlayed, its empty because ai is leading
         ArrayList<Card> cardsPlayed = new ArrayList<>();
 
         ai1.setLead(true);
@@ -101,25 +144,48 @@ public class testAI {
         Assert.assertEquals(CardValue.KING, play.getValue());
     }
 
+    /**
+     * Tests the AI to follow suit
+     */
+    @Test
+    public void testPlayCard5(){
+        AI ai1 = new AI(1);
 
+        //Prepare Hand
+        ai1.receiveCardFromDealer(new Card(Suit.SPADES, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.KING));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
+
+        //Prepare cardsPlayed
+        ArrayList<Card> cardsPlayed = new ArrayList<>();
+        cardsPlayed.add(new Card(Suit.HEARTS, CardValue.ACE));
+        cardsPlayed.add(new Card(Suit.HEARTS, CardValue.QUEEN));
+        cardsPlayed.add(new Card(Suit.HEARTS, CardValue.TEN));
+
+        ai1.setLead(false);
+        ai1.setHighestRemainingTrumpCard(Suit.CLUBS, CardValue.JACK);
+
+        Card play = ai1.determinePlay(cardsPlayed, Suit.CLUBS);
+
+        Assert.assertEquals(Suit.HEARTS, play.getSuit());
+        Assert.assertEquals(CardValue.KING, play.getValue());
+    }
 
     /**
      * Tests the AI to play off when teammate has trick & AI has the possibility to trump
      */
     @Test
-    public void testPlayCard3(){
+    public void testPlayCard6(){
         AI ai1 = new AI(1);
 
         //Prepare Hand
-        ArrayList<Card> testHand = new ArrayList<>();
-        testHand.add(new Card(Suit.SPADES, CardValue.JACK));
-        testHand.add(new Card(Suit.CLUBS, CardValue.QUEEN));
-        testHand.add(new Card(Suit.CLUBS, CardValue.TEN));
-        testHand.add(new Card(Suit.DIAMONDS, CardValue.KING));
-        testHand.add(new Card(Suit.HEARTS, CardValue.KING));
-        for(Card c: testHand){
-            ai1.receiveCardFromDealer(c);
-        }
+        ai1.receiveCardFromDealer(new Card(Suit.SPADES, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.KING));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
 
         //Prepare cardsPlayed
         ArrayList<Card> cardsPlayed = new ArrayList<>();
@@ -137,81 +203,82 @@ public class testAI {
     }
 
     /**
-     * Tests the AI to follow suit
+     * Test that ai calls trump when "screw the dealer" as dealer
      */
     @Test
-    public void testPlayCard4(){
+    public void testCallTrump1(){
         AI ai1 = new AI(1);
 
         //Prepare Hand
-        ArrayList<Card> testHand = new ArrayList<>();
-        testHand.add(new Card(Suit.SPADES, CardValue.JACK));
-        testHand.add(new Card(Suit.CLUBS, CardValue.QUEEN));
-        testHand.add(new Card(Suit.CLUBS, CardValue.TEN));
-        testHand.add(new Card(Suit.DIAMONDS, CardValue.KING));
-        testHand.add(new Card(Suit.HEARTS, CardValue.KING));
-        for(Card c: testHand){
-            ai1.receiveCardFromDealer(c);
-        }
+        ai1.receiveCardFromDealer(new Card(Suit.SPADES, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.KING));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
 
-        //Prepare cardsPlayed
-        ArrayList<Card> cardsPlayed = new ArrayList<>();
-        cardsPlayed.add(new Card(Suit.HEARTS, CardValue.ACE));
-        cardsPlayed.add(new Card(Suit.HEARTS, CardValue.QUEEN));
-        cardsPlayed.add(new Card(Suit.HEARTS, CardValue.TEN));
-
-        ai1.setLead(false);
-        ai1.setHighestRemainingTrumpCard(Suit.CLUBS, CardValue.JACK);
-
-        Card play = ai1.determinePlay(cardsPlayed, Suit.CLUBS);
-
-        Assert.assertEquals(Suit.HEARTS, play.getSuit());
-        Assert.assertEquals(CardValue.KING, play.getValue());
+        Card cardUp = new Card(Suit.CLUBS, CardValue.NINE);
+        Pair<Suit, Boolean> result = ai1.callTrump(cardUp, true, true);
+        Assert.assertEquals(Suit.SPADES, result.first);
     }
 
-
-
-
-
-
-
-
-
-    /* POSSIBLE SCENARIOS */
-    /* decidePlay
-     *      Hand size: 1
-     *          Plays the last card correctly
-     *      Hand size: 2-5
-     *          +Lead, +hasTrump, +hasHRTC
-     *          +Lead, +hasTrump, -hasHRTC
-     *          +Lead, -hasTrump
-     *
-     *          -Lead, +trumpLed, +hasTrump (2+), +canTakeTrick, +tm8Played, +tm8HasTrick
-     *          -Lead, +trumpLed, +hasTrump (2+), +canTakeTrick, +tm8Played, -tm8HasTrick
-     *          -Lead, +trumpLed, +hasTrump (2+), +canTakeTrick, -tm8Played
-     *          -Lead, +trumpLed, +hasTrump (2+), -canTakeTrick
-     *          -Lead, +trumpLed, +hasTrump (1)
-     *          -Lead, +trumpLed, -hasTrump
-     *
-     *          -Lead, -trumpLed, +canFollowSuit, +canTakeTrick, +tm8Played, +tm8HasTrick
-     *          -Lead, -trumpLed, +canFollowSuit, +canTakeTrick, +tm8Played, -tm8HasTrick
-     *          -Lead, -trumpLed, +canFollowSuit, +canTakeTrick, -tm8Played
-     *          -Lead, -trumpLed, +canFollowSuit, -canTakeTrick
-     *
-     *          -Lead, -trumpLed, -canFollowSuit, +canTakeTrick (trump), +tm8Played, +tm8HasTrick
-     *          -Lead, -trumpLed, -canFollowSuit, +canTakeTrick (trump), +tm8Played, -tm8HasTrick
-     *          -Lead, -trumpLed, -canFollowSuit, +canTakeTrick (trump), -tm8Played
-     *          -Lead, -trumpLed, -canFollowSuit, -canTakeTrick
+    /**
+     * Test that ai calls trump as dealer when has 2+ of the suit of cardUp, the cardUp is a Jack
+     * and/or ai has the left or right bower.
      */
-    /* decideTrump
-     *      4 suited
-     *
-     *      3 suited
-     *
-     *      2 suited
-     *
-     *      1 suited
-     */
+    @Test
+    public void testCallTrump2(){
+        AI ai1 = new AI(1);
 
+        //Prepare Hand
+        ai1.receiveCardFromDealer(new Card(Suit.SPADES, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.KING));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
+
+        Card cardUp = new Card(Suit.CLUBS, CardValue.NINE);
+        Pair<Suit, Boolean> result = ai1.callTrump(cardUp, false, true);
+        Assert.assertEquals(Suit.CLUBS, result.first);
+    }
+
+    /**
+     * Test that ai turns down trump when it does not have the requirements & topCard has been
+     * turned down already
+     */
+    @Test
+    public void testCallTrump3(){
+        AI ai1 = new AI(1);
+
+        //Prepare Hand
+        ai1.receiveCardFromDealer(new Card(Suit.DIAMONDS, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
+
+        Card cardUp = new Card(Suit.CLUBS, CardValue.NINE);
+        Pair<Suit, Boolean> result = ai1.callTrump(cardUp, true, false);
+        Assert.assertNull(result.first);
+    }
+
+    /**
+     * Test that ai calls trump when it does have the requirements & topCard has been
+     * turned down already
+     */
+    @Test
+    public void testCallTrump4(){
+        AI ai1 = new AI(1);
+
+        //Prepare Hand
+        ai1.receiveCardFromDealer(new Card(Suit.SPADES, CardValue.JACK));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.QUEEN));
+        ai1.receiveCardFromDealer(new Card(Suit.CLUBS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.TEN));
+        ai1.receiveCardFromDealer(new Card(Suit.HEARTS, CardValue.KING));
+
+        Card cardUp = new Card(Suit.SPADES, CardValue.NINE);
+        Pair<Suit, Boolean> result = ai1.callTrump(cardUp, true, false);
+        Assert.assertNull(result.first);
+    }
 
 }
