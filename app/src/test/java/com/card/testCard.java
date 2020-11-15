@@ -15,78 +15,68 @@ public class testCard {
     @Test
     public void testIsTrump_nineOfHearts_trumpIsHearts_returnsTrue() {
         card = new Card(Suit.HEARTS, CardValue.NINE);
-        card.setIsTrump(Suit.HEARTS);
-        assertTrue(card.isTrump());
+        assertTrue(card.isTrump(Suit.HEARTS));
     }
 
 
     @Test
     public void testIsTrump_nineOfHearts_trumpIsDiamonds_returnsFalse() {
         card = new Card(Suit.HEARTS, CardValue.NINE);
-        card.setIsTrump(Suit.DIAMONDS);
-        assertFalse(card.isTrump());
+        assertFalse(card.isTrump(Suit.DIAMONDS));
     }
 
     @Test
     public void testIsTrump_nineOfHearts_trumpIsClubs_returnsFalse() {
         card = new Card(Suit.HEARTS, CardValue.NINE);
-        card.setIsTrump(Suit.CLUBS);
-        assertFalse(card.isTrump());
+        assertFalse(card.isTrump(Suit.CLUBS));
     }
 
 
     @Test
     public void testIsTrump_nineOfHearts_trumpIsSpades_returnsFalse() {
         card = new Card(Suit.HEARTS, CardValue.NINE);
-        card.setIsTrump(Suit.SPADES);
-        assertFalse(card.isTrump());
+        assertFalse(card.isTrump(Suit.SPADES));
     }
 
 
     @Test
     public void testIsTrump_jackOfHearts_trumpIsDiamonds_returnsTrue() {
         card = new Card(Suit.HEARTS, CardValue.JACK);
-        card.setIsTrump(Suit.DIAMONDS);
-        assertTrue(card.isTrump());
+        assertTrue(card.isTrump(Suit.DIAMONDS));
     }
 
 
     @Test
     public void testIsTrump_jackOfDiamonds_trumpIsHearts_returnsTrue() {
         card = new Card(Suit.DIAMONDS, CardValue.JACK);
-        card.setIsTrump(Suit.HEARTS);
-        assertTrue(card.isTrump());
+        assertTrue(card.isTrump(Suit.HEARTS));
     }
 
 
     @Test
     public void testIsTrump_jackOfSpades_trumpIsClubs_returnsTrue() {
         card = new Card(Suit.SPADES, CardValue.JACK);
-        card.setIsTrump(Suit.CLUBS);
-        assertTrue(card.isTrump());
+        assertTrue(card.isTrump(Suit.CLUBS));
     }
 
 
     @Test
     public void testIsTrump_jackOfClubs_trumpIsSpades_returnsTrue() {
         card = new Card(Suit.CLUBS, CardValue.JACK);
-        card.setIsTrump(Suit.SPADES);
-        assertTrue(card.isTrump());
+        assertTrue(card.isTrump(Suit.SPADES));
     }
 
 
     @Test
     public void testIsTrump_jackOfSpades_trumpIsHearts_returnsFalse() {
         card = new Card(Suit.SPADES, CardValue.JACK);
-        card.setIsTrump(Suit.HEARTS);
-        assertFalse(card.isTrump());
+        assertFalse(card.isTrump(Suit.HEARTS));
     }
 
 
     @Test
     public void testIsTrump_jackOfDiamonds_trumpIsClubs_returnsFalse() {
         card = new Card(Suit.DIAMONDS, CardValue.JACK);
-        card.setIsTrump(Suit.CLUBS);
-        assertFalse(card.isTrump());
+        assertFalse(card.isTrump(Suit.CLUBS));
     }
 }
