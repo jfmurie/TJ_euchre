@@ -22,12 +22,6 @@ public class Card {
     public final CardValue value; // might want to consider making this an enum
 
     /**
-     * If the card is Trump or not
-     */
-    public boolean isTrump;  // might want to consider a different approach to this
-
-
-    /**
      * Constructor for Card object, sets the suit and value.
      *
      * @param suit the passed suit
@@ -37,16 +31,6 @@ public class Card {
         this.suit = suit;
         this.value = value;
     }
-
-    /**
-     * Getter for isTrump variable.
-     *
-     * @return True if the card is trump.
-     */
-    public boolean isTrump() {
-        return this.isTrump;
-    }
-
 
     /**
      * Returns the color of the card based on the suit.
@@ -61,13 +45,60 @@ public class Card {
     }
 
     /**
-     * Sets if the card is trump or not.
+     * Determines if this Card is trump
      *
-     * @param trump The suit that is trump during a given round.
+     * @param trump the suit declared trump
+     * @return true if Card has same suit or is left bower, false otherwise
      */
-    public void setIsTrump(Suit trump) {
-        this.isTrump = this.suit == trump
-            || (CardValue.JACK == this.getValue() && getColor(this.getSuit()) == getColor(trump));
+    public boolean isTrump(Suit trump) {
+        return this.suit == trump
+                || (CardValue.JACK == this.value && getColor(this.suit) == getColor(trump));
+    }
+
+    /**
+     * Tells if this card has the given suit and CardValue
+     *
+     * @param s the suit to compare to
+     * @param v the CardValue to compare to
+     * @return true if this card has the save suit an CardValue
+     */
+    public boolean isCard(Suit s, CardValue v){
+        return this.suit == s && this.value == v;
+    }
+
+    /**
+     * tells if card is the right bower for a given trump
+     *
+     * @param trump the given trump
+     * @return true if card is Jack of trump, false otherwise
+     */
+    public boolean isRightBower(Suit trump){
+        return isCard(trump, CardValue.JACK);
+    }
+
+    /**
+     * tells if card is the left bower for a given trump
+     *
+     * @param trump the given trump
+     * @return true if card is Jack of same color suit of trump, false otherwise
+     */
+    public boolean isLeftBower(Suit trump){
+        Suit leftBowerSuit = null;
+        switch (trump){
+            case CLUBS:
+                leftBowerSuit = Suit.SPADES;
+                break;
+            case DIAMONDS:
+                leftBowerSuit = Suit.HEARTS;
+                break;
+            case HEARTS:
+                leftBowerSuit = Suit.DIAMONDS;
+                break;
+            case SPADES:
+                leftBowerSuit = Suit.CLUBS;
+                break;
+        }
+        return isCard(leftBowerSuit, CardValue.JACK);
     }
 
     /**
