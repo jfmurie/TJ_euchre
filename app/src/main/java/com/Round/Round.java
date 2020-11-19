@@ -14,33 +14,24 @@ import com.team.Team;
 
 public class Round {
 
-    private Suit trump; // do we want this in construtor
-
-    // make team field
-
-    private final Trick[] trick;
-
-    private final int trickIndex;
+    private Suit trump;
 
     private int dealerIndex;
 
     private int sitOut;
 
+    int teamCalledTrump;
+
     /**
      * Constructor for the Round class.
      */
     public Round() {
-        this.trick = new Trick[5];
-        this.trickIndex = 0;
         sitOut = -1;
+        teamCalledTrump = -1;
     }
 
     public Suit getTrump() {
         return trump;
-    }
-
-    public int getTrickIndex() {
-        return trickIndex;
     }
 
     public void setSitOut(int sitOut) {
@@ -68,6 +59,11 @@ public class Round {
 
                 if (suit != null) {
                     this.trump = suit;
+                    if(j == 0 || j == 2){
+                        teamCalledTrump = 1;
+                    }else{
+                        teamCalledTrump = 2;
+                    }
 
                     if(!turnedDown) {
                         players[playerIndex].pickItUp(turnedUp);
@@ -87,8 +83,42 @@ public class Round {
 
 
     public void playRound(Team team1, Team team2, Player[] players, int dealerIndex){
-        //TODO: run through 5 tricks
+        int team1TricksTaken = 0;
+        int team2TricksTaken = 0;
+        for (int i = 0; i < 5; i++){
+            Trick currentTrick = new Trick();
+            int lead = (dealerIndex+1)%4;
+            int winner = currentTrick.playTrick(players, lead, this.trump);
+            if(winner == 0 || winner == 2){
+                team1TricksTaken++;
+            }else{
+                team2TricksTaken++;
+            }
+        }
+        switch (teamCalledTrump){
+            case 1:
+                if(team1TricksTaken >= 3){
+                    if(team1TricksTaken == 5){
+                        team1.updateTeamScore(2);
+                    }else {
+                        team1.updateTeamScore(1);
+                    }
+                }else{
+                    team2.updateTeamScore(2);
+                }
+                break;
+            case 2:
+                if(team2TricksTaken >= 3){
+                    if(team2TricksTaken == 5){
+                        team2.updateTeamScore(2);
+                    }else{
+                        team2.updateTeamScore(1);
+                    }
+                }else{
+                    team1.updateTeamScore(2);
+                }
+                break;
+            default: break;
+        }
     }
-
-
 }
