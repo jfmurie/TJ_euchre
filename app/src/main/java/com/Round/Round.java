@@ -4,10 +4,13 @@ package com.Round;
  * changed because that import doesn't work with unit testing
  * https://stackoverflow.com/questions/35979397/android-immediately-created-pair-elements-are-null
  */
+
 import android.support.v4.util.Pair;
 
 import com.Trick.Trick;
 import com.card.Card;
+import com.cardvalues.CardValue;
+import com.player.AI;
 import com.player.Player;
 import com.suits.Suit;
 import com.team.Team;
@@ -49,11 +52,13 @@ public class Round {
         Suit suit;
         Boolean goAlone;
         boolean turnedDown = false;
+        boolean isDealer;
         int playerIndex = (dealerIndex + 1) % 4;
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 4; j++) {
-                Pair<Suit, Boolean> suitGoAlonePair = players[playerIndex].callTrump(turnedUp, turnedDown, false);
+                isDealer = j == dealerIndex;
+                Pair<Suit, Boolean> suitGoAlonePair = players[playerIndex].callTrump(turnedUp, turnedDown, isDealer);
                 suit = suitGoAlonePair.first;
                 goAlone = suitGoAlonePair.second;
 
@@ -72,6 +77,7 @@ public class Round {
                     if (goAlone != null && goAlone) {
                         this.sitOut = playerIndex + 2 % 4;
                     }
+                    updateAIOnHRTC(suit, players);
                     return;
                 }
 
@@ -121,4 +127,15 @@ public class Round {
             default: break;
         }
     }
+
+    private void updateAIOnHRTC(Suit trump, Player[] players){
+        for (Player p: players) {
+            if(p.isAI()){
+                ((AI) p).setHighestRemainingTrumpCard(trump, CardValue.JACK);
+            }
+        }
+    }
+
+
+
 }

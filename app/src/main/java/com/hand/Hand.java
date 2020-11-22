@@ -128,21 +128,27 @@ public class Hand {
         if (trumpCards.isEmpty()){
             return null;
         }
-        //if only has 1 trump card
-        if (trumpCards.size() == 1){
-            return trumpCards.get(0);
-        }
-        //2 or more trump cards looks for highest
-        for (int i = 0; i < trumpCards.size(); i++) {
-            if (trumpCards.get(lowIndex).getValue().getNumericalValue() > trumpCards.get(i+1).getValue().getNumericalValue()){
-                lowIndex = i+1;
+        CardValue lowestVal = null;
+        Card lowestTrump = null;
+        for (Card c: trumpCards) {
+            if(lowestVal == null){
+                lowestVal = c.getValue();
+                lowestTrump = c;
+            }
+
+            if(lowestTrump.isLeftBower(trump) || lowestTrump.isRightBower(trump)){
+                lowestVal = c.getValue();
+                lowestTrump = c;
+            }
+            else if(lowestVal.getNumericalValue() > c.getValue().getNumericalValue()){
+                lowestVal = c.getValue();
+                lowestTrump = c;
             }
         }
-        return trumpCards.get(lowIndex);
+        return lowestTrump;
     }
 
     public Card getHighestNonTrump(Suit trump) {
-        int highNTIndex = 0;
         //if has no cards
         if (hand.isEmpty()){
             return null;
@@ -221,13 +227,9 @@ public class Hand {
         return hand.size();
     }
 
-    //play card method
-    //take in the index of the card removes that card returns the card identifier
-    //could I have it so that it removes the card and adds it to a cards played list to use in trick??
     public Card removeCard(int index){
         return hand.remove(index);
     }
-
 
     /**
      *
@@ -279,13 +281,15 @@ public class Hand {
         return new Pair<>(suits[indexOfMost], numOfSuits[indexOfMost]);
     }
 
-    public int getCountOfSuit(Suit s){
+    public int getCountOfSuit(Suit s, boolean isTrump){
         if(this.hand == null || this.hand.size() == 0){
             return -1;
         }
         int count = 0;
         for(Card c:this.hand){
             if(c.getSuit() == s){
+                count++;
+            } else if(isTrump && c.isLeftBower(s)){
                 count++;
             }
         }
@@ -395,7 +399,5 @@ public class Hand {
         }
         return false;
     }
-
-
 
 }

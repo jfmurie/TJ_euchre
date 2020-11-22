@@ -53,7 +53,7 @@ public class Trick {
             }
             else{
                 c = players[playerIndex].playCard(cardsPlayed, trump);
-
+                //Todo: call UI/animation method that shows what the AI played (c)
             }
             cardsPlayed.add(c);
             playerIndex = (playerIndex + 1) % 4;

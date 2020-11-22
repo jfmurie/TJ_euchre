@@ -84,6 +84,7 @@ public class UserPlayer implements Player {
     public void pickItUp(Card topCard){
         //Todo: get user input on which card to remove
         receiveCardFromDealer(topCard);
+
     }
 
     @Override
