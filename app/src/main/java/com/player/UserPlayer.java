@@ -18,15 +18,15 @@ public class UserPlayer implements Player {
     private Hand playerHand;
 
     public UserPlayer(){
-        playerNum = 0;
-        isLead = false;
-        playerHand = new Hand();
+        this.playerNum = 0;
+        this.isLead = false;
+        this.playerHand = new Hand();
     }
 
     public UserPlayer(boolean isLead){
-        playerNum = 0;
+        this.playerNum = 0;
         this.isLead = isLead;
-        playerHand = new Hand();
+        this.playerHand = new Hand();
     }
 
     @Override
@@ -65,6 +65,10 @@ public class UserPlayer implements Player {
     public Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer) {
         //Todo: this will alert Round class that the other player of this team will be sitting out
         // SOMEHOW SOMEWAY GET USER INPUT :(
+//        Suit called = null;
+//        while(called == null){
+//            called = UIFunction();
+//        }
         return new Pair<>(null, goAlone(topCard));
     }
 

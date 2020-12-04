@@ -7,20 +7,65 @@
     android:background="@drawable/background"
     tools:context=".GameScreen">
 
-    <TextView
-        android:id="@+id/titleSubtext2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:fontFamily="@font/geostar_fill"
-        android:text="Trump"
-        android:textAllCaps="false"
-        android:textColor="#FB0000"
-        android:textSize="18sp"
-        android:textStyle="italic"
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="55dp"
+        android:text="Diamond"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="55dp"
+        android:text="club"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="16dp"
+        android:text="spade"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="16dp"
+        android:text="Heart"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deal"
+        android:onClick="start"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonOR"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOL"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonOF" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -42,7 +87,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/a091" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <ImageButton
         android:id="@+id/imageButtonBR"
@@ -55,7 +100,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/a091" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <ImageButton
         android:id="@+id/imageButtonBL"
@@ -68,7 +113,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/a091" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <ImageButton
         android:id="@+id/imageButtonTR"
@@ -81,7 +126,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/a091" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <ImageButton
         android:id="@+id/imageButtonOL"
@@ -136,54 +181,21 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/a091"
+        app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="MissingPrefix" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="55dp"
-        android:text="Diamond"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="55dp"
-        android:text="club"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="16dp"
-        android:text="spade"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="16dp"
-        android:text="Heart"
-        android:textSize="10sp"
+    <TextView
+        android:id="@+id/titleSubtext2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:fontFamily="@font/geostar_fill"
+        android:text="Trump"
+        android:textAllCaps="false"
+        android:textColor="#FB0000"
+        android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -12,9 +12,7 @@ import com.team.Team;
 
 public class PlayGame {
 
-
-    public static void main(String[] args) {
-
+    public void play() {
         Player userPlayer = new UserPlayer();
         Player ai1 = new AI(1);
         Player ai2 = new AI(2);
@@ -42,7 +40,6 @@ public class PlayGame {
         }
 
         while(userTeam.getTeamScore() < 10 && pureAITeam.getTeamScore() < 10) {
-
             deck.shuffleDeck();
             Card topCard = deck.deal(players, dealerIndex);
             Round round = new Round();

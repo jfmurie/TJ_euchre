@@ -52,7 +52,7 @@ public class Deck {
      */
     public void shuffleDeck() {
         Collections.shuffle(this.deck);
-        this.topCardIndex = 0;
+        this.topCardIndex = deck.size() - 1;
     }
 
     /**
@@ -73,24 +73,72 @@ public class Deck {
      */
     public Card deal(Player[] players, int dealerIndex){
         int playerIndex = (dealerIndex + 1) % 4;
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 4; j++) {
+//        for (int i = 0; i < 2; i++) {
+//            for (int j = 0; j < 4; j++) {
+//
+//                //i = time dealt (0 or 1)
+//                //player index (0 - 3)
+//                //if player dealt 1st and not on dealer's team, give three, etc.
+//                if((i + j)% 2 == 0){
+//                    players[playerIndex].receiveCardFromDealer(getTopCard());
+//                    System.out.println(playerIndex + " " + players[playerIndex].getPlayerHand().get(0).getSuit());
+//                    players[playerIndex].receiveCardFromDealer(getTopCard());
+//                    players[playerIndex].receiveCardFromDealer(getTopCard());
+//                }
+//                else{
+//                    players[playerIndex].receiveCardFromDealer(getTopCard());
+//                    players[playerIndex].receiveCardFromDealer(getTopCard());
+//                }
+//            }
+//            playerIndex = (playerIndex + 1) % 4;
+//        }
 
-                //i = time dealt (0 or 1)
-                //player index (0 - 3)
-                //if player dealt 1st and not on dealer's team, give three, etc.
-                if((i + j)% 2 == 0){
-                    players[playerIndex].receiveCardFromDealer(getTopCard());
-                    players[playerIndex].receiveCardFromDealer(getTopCard());
-                    players[playerIndex].receiveCardFromDealer(getTopCard());
-                }
-                else{
-                    players[playerIndex].receiveCardFromDealer(getTopCard());
-                    players[playerIndex].receiveCardFromDealer(getTopCard());
-                }
+        for(int i = 0; i < 4; i++){
+            if(dealerIndex % 2 == 0 && playerIndex % 2 == 0){               //Dealer is even & player getting cards is even
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+            }
+            else if(dealerIndex % 2 == 0){                                  //Dealer is even & player getting cards is odd
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+            }
+            else if(playerIndex % 2 == 0){                                  //Dealer is odd & player getting cards is even
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+            }
+            else {                                                          //Dealer is odd & player getting cards is odd
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
             }
             playerIndex = (playerIndex + 1) % 4;
         }
+
+        //do it again but flip it
+        for(int i = 0; i < 4; i++){
+            if(dealerIndex % 2 == 0 && playerIndex % 2 == 0){               //Dealer is even & player getting cards is even
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+            }
+            else if(dealerIndex % 2 == 0){                                  //Dealer is even & player getting cards is odd
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+            }
+            else if(playerIndex % 2 == 0){                                  //Dealer is odd & player getting cards is even
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+            }
+            else {                                                          //Dealer is odd & player getting cards is odd
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+                players[playerIndex].receiveCardFromDealer(getTopCard());
+            }
+            playerIndex = (playerIndex + 1) % 4;
+        }
+
+
 
         return this.getTopCard();
     }
