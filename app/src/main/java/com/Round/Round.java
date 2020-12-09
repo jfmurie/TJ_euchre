@@ -159,23 +159,29 @@ public class Round {
         if(this.teamCalledTrump == team1){
             if(team1.getTricksTaken() == 5){
                 team1.updateTeamScore(2);
+                System.out.println("Team 1 got 2 points.");
             }
             else if(team1.getTricksTaken() >= 3){
                 team1.updateTeamScore(1);
+                System.out.println("Team 1 got a point.");
             }
             else{
                 team2.updateTeamScore(2);
+                System.out.println("Team 2 got 2 points.");
             }
         }
         else{
             if(team2.getTricksTaken() == 5){
                 team2.updateTeamScore(2);
+                System.out.println("Team 2 got 2 points.");
             }
             else if(team2.getTricksTaken() >= 3){
                 team2.updateTeamScore(1);
+                System.out.println("Team 2 got a point.");
             }
             else{
                 team1.updateTeamScore(2);
+                System.out.println("Team 1 got 2 points.");
             }
         }
     }

@@ -307,16 +307,29 @@ public class AI implements Player {
     //helper method for AI Logic
     private int getCurrentWinningCardIndex(ArrayList<Card> cardsPlayed, Suit trump){
         int highestCardValue = 0;
-        int index = -1;
-        for(int i = 0; i < cardsPlayed.size(); i++){
+        Card highestCard = null;
+        int index = 0;
+        for(int i = 0; i < cardsPlayed.size(); i++) {
+            if (cardsPlayed.get(i).isRightBower(trump)) {
+                return i;
+            }
+            if (cardsPlayed.get(i).isLeftBower(trump)) {
+                index = i;
+                continue;
+            }
+            if (cardsPlayed.get(index).isLeftBower(trump)) {
+                continue;
+            }
+
             int temp = cardsPlayed.get(i).getValue().getNumericalValue();
-            if(cardsPlayed.get(i).getSuit() == cardsPlayed.get(0).getSuit()){
+            if (cardsPlayed.get(i).getSuit() == cardsPlayed.get(0).getSuit()) {
                 temp *= 2;
             }
-            if(cardsPlayed.get(i).getSuit() == trump){
-                temp *= 3;
+            if (cardsPlayed.get(i).isTrump(trump)) {
+                temp *= 4;
             }
-            if(highestCardValue < temp){
+
+            if (highestCardValue < temp) {
                 highestCardValue = temp;
                 index = i;
             }

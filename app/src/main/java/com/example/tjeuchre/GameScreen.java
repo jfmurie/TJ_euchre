@@ -51,6 +51,7 @@ public class GameScreen extends AppCompatActivity {
     boolean userHasToReplaceCard;
     boolean topCardTurnedDown;
     Card topCard;
+    final int maxPoints = 3;    //TODO: change this back to 10, it is at 3 for quicker testing
 
     boolean cardTLPlayed;
     boolean cardTCPlayed;
@@ -96,7 +97,6 @@ public class GameScreen extends AppCompatActivity {
                 trumpPassButton.setVisibility(View.INVISIBLE);
                 int timesAround = 0;
 
-                //TODO: This if statement may need to change
                 if(dealerIndex == 0 || topCardTurnedDown){
                     topCardTurnedDown = true;
                     timesAround++;
@@ -252,10 +252,6 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
-    public String getImage(){//can also use image type
-        String nineHearts = "@drawable/a091";
-        return nineHearts;
-    }
     public void moveCardToMiddle(ImageButton cardButton){
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(cardButton, "x", 400f);
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(cardButton, "y", 380f);
@@ -322,6 +318,10 @@ public class GameScreen extends AppCompatActivity {
             else if(value == CardValue.ACE){
                 handCard.setImageResource(R.drawable.a144);}
         }
+        //Reset to back of card image
+        else if (suit == Suit.PASS){
+            handCard.setImageResource(R.drawable.cardback);
+        }
     }
 
     public void start(View view) {
@@ -347,16 +347,14 @@ public class GameScreen extends AppCompatActivity {
         hideAllTrumpButtons();
     }
     public void startRound(){
-        if(userTeam.getTeamScore() < 10 && pureAITeam.getTeamScore() < 10){
+        if(userTeam.getTeamScore() < maxPoints && pureAITeam.getTeamScore() < maxPoints){
             System.out.println("Starting a new round.");
             System.out.println("Dealer is Player " + dealerIndex);
             currentRound = new Round();
             topCard = dealCards();
+            printHands();
             System.out.println("Top Card is: " + topCard.getValue() + " of " + topCard.getSuit());
             callTrump(0);
-        }
-        else{
-            //TODO: show endgame
         }
     }
     public Card dealCards(){
@@ -421,6 +419,7 @@ public class GameScreen extends AppCompatActivity {
 
         hideNonTrumpButtons();
         if(topCardTurnedDown){
+            currentPlayerIndex = (dealerIndex + 1) % 4;
             startTrick();
         }
         else {
@@ -542,8 +541,7 @@ public class GameScreen extends AppCompatActivity {
         }
         else{
 
-            //TODO:
-            // 1) show instruction text ("Please choose a card to discard.")
+            //TODO: show instruction text ("Please choose a card to discard.")
             enableAllCardButtons();
             userHasToReplaceCard = true;
         }
@@ -557,6 +555,8 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void takeTurn(){
+        //TODO: add wait periods after every AI play, about 2 - 5 seconds
+
         System.out.println("Player " + currentPlayerIndex + " is taking their turn.");
         if(players[currentPlayerIndex].isAI()){
             Card play = players[currentPlayerIndex].playCard(currentRound.getCurrentTrick().getPlayedCards(), currentRound.getTrump());
@@ -587,14 +587,13 @@ public class GameScreen extends AppCompatActivity {
         else{
             enableAllCardButtons();
             //TODO: (optional?)
-            // 1) If any of the player's cards are the led suit, disable all the others
+            // If any of the player's cards are the led suit, disable all the others
             //      else, keep all enabled that are still in hand
         }
     }
 
     public void endTrick(){
-        //TODO:
-        // 1) Show who won trick through UI
+        //TODO: Show who won trick through UI and then wait for like 2-5 seconds
 
         //Make card played by user invisible
         if(cardTLPlayed){
@@ -637,17 +636,17 @@ public class GameScreen extends AppCompatActivity {
             endRound();
         }
         else {
+            resetOtherImageButtons();
             startTrick();
         }
     }
     public void endRound(){
         System.out.println("Round over.");
-        //TODO:
-        // 1) add points correctly
-        // 2) Reset cards/image buttons & booleans associated
 
         //Add points to the correct team
         currentRound.awardPoints(userTeam, pureAITeam);
+        System.out.println("User Team has " + userTeam.getTeamScore() + " points.");
+        System.out.println("AI Team has " + pureAITeam.getTeamScore() + " points.");
 
         resetImageButtons();
 
@@ -672,7 +671,27 @@ public class GameScreen extends AppCompatActivity {
         //reset other values needed
         userHasToReplaceCard = false;
         disableAllCardButtons();
+
+        for(Player p:players){
+            p.setLead(false);
+        }
+
+        if(userTeam.getTeamScore() >= maxPoints || pureAITeam.getTeamScore() >= maxPoints){
+            endGame();
+        }
     }
+    public void endGame(){
+        startButton.setVisibility(View.INVISIBLE);
+
+        System.out.println("GAME OVER");
+        if(userTeam.getTeamScore() >= maxPoints){
+            System.out.println("YOU WON");
+        }
+        else{
+            System.out.println("YOU LOST");
+        }
+    }
+
 
     public void resetImageButtons(){
         //Reset Card/image buttons to original position
@@ -690,8 +709,30 @@ public class GameScreen extends AppCompatActivity {
         imageButtonBR.setVisibility(View.VISIBLE);
         disableAllCardButtons();
 
-        //set the cards to plus sign image
-        //"@android:drawable/ic_input_add"
-        // TODO
+        //set the cards to be the backs
+        setCardImage(imageButtonTL, Suit.PASS, CardValue.NINE);
+        setCardImage(imageButtonTC, Suit.PASS, CardValue.NINE);
+        setCardImage(imageButtonTR, Suit.PASS, CardValue.NINE);
+        setCardImage(imageButtonBL, Suit.PASS, CardValue.NINE);
+        setCardImage(imageButtonBR, Suit.PASS, CardValue.NINE);
+
+        resetOtherImageButtons();
+    }
+
+    public void resetOtherImageButtons(){
+        setCardImage(imageButtonOL, Suit.PASS, CardValue.NINE);
+        setCardImage(imageButtonOF, Suit.PASS, CardValue.NINE);
+        setCardImage(imageButtonOR, Suit.PASS, CardValue.NINE);
+    }
+
+    private void printHands(){
+        for(Player p:players){
+            System.out.println("Player " + p.getPlayerNum());
+            for(Card c:p.getPlayerHand()){
+                System.out.println(c.getValue() + " of " + c.getSuit());
+            }
+            System.out.println();
+        }
+
     }
 }
