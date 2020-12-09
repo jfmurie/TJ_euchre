@@ -93,7 +93,7 @@ public class AI implements Player {
         /* Screw the dealer - Call trump as the suit that AI has the most cards of */
         if(dealer && topCardTurnedDown) {
             if(mostSuitAndCount.first == cardUp.getSuit()) {
-                Suit secondBest = null;
+                Suit secondBest = Suit.PASS;
                 int secondBestCount = 0;
                 for (Suit s : Suit.values()) {
                     if (s == cardUp.getSuit()) {
@@ -106,7 +106,7 @@ public class AI implements Player {
                     }
                 }
 
-                if (secondBest == null) {
+                if (secondBest == Suit.PASS) {
                     System.out.println("Error, can't obtain a second best choice for callTrump.");
                     return null;
                 }
@@ -145,7 +145,7 @@ public class AI implements Player {
                 return null;
             }
             if(mostSuitAndCount.first == cardUp.getSuit()){
-                return new Pair<>(null, false);
+                return new Pair<>(Suit.PASS, false);
             }
             if(mostSuitAndCount.second > 2
                     && (aiHand.hasRightBower(mostSuitAndCount.first)
@@ -153,7 +153,7 @@ public class AI implements Player {
                 return new Pair<>(mostSuitAndCount.first, false);
             }
         }
-        return new Pair<>(null, false);
+        return new Pair<>(Suit.PASS, false);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class AI implements Player {
     }
 
     @Override
-    public Card playCard(){
+    public Card playCard(int cardIndex){
         return null;
     }
 
@@ -325,7 +325,8 @@ public class AI implements Player {
     }
 
     @Override
-    public void pickItUp(Card topCard){
+    public void pickItUp(Card topCard, int indexOfOldCard){
+        //indexOfOldCard, this value is only used in UserPlayer
         int lowestCard = aiHand.getHand().indexOf(aiHand.getLowestNonTrump(topCard.getSuit()));
         aiHand.removeCard(lowestCard);
         receiveCardFromDealer(topCard);

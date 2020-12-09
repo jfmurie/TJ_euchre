@@ -17,6 +17,8 @@ public class Team {
      */
     private int teamScore;
 
+    private int tricksTaken;
+
 
     /**
      * Constructor for the team object.  Sets teamScore to 0 and team to the players that are passed in.
@@ -27,6 +29,7 @@ public class Team {
     public Team(Player player1, Player player2) {
         this.team = new Player[] {player1, player2};
         this.teamScore = 0;
+        this.tricksTaken = 0;
     }
 
 
@@ -37,6 +40,19 @@ public class Team {
      */
     public int getTeamScore() {
         return this.teamScore;
+    }
+
+
+    public int getTricksTaken(){
+        return this.tricksTaken;
+    }
+
+    public void incrementTricksTaken(){
+        this.tricksTaken++;
+    }
+
+    public boolean isPartOfTeam(Player player){
+        return player == team[0] || player == team[1];
     }
 
     /**

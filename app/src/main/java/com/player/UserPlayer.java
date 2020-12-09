@@ -4,11 +4,12 @@ package com.player;
  * changed because that import doesn't work with unit testing
  * https://stackoverflow.com/questions/35979397/android-immediately-created-pair-elements-are-null
  */
+
 import android.support.v4.util.Pair;
 
 import com.card.Card;
-import com.suits.Suit;
 import com.hand.Hand;
+import com.suits.Suit;
 
 import java.util.ArrayList;
 
@@ -16,17 +17,21 @@ public class UserPlayer implements Player {
     private int playerNum;
     private boolean isLead;
     private Hand playerHand;
+    private Suit suitUserChose;
+
 
     public UserPlayer(){
         this.playerNum = 0;
         this.isLead = false;
         this.playerHand = new Hand();
+        this.suitUserChose = null;
     }
 
     public UserPlayer(boolean isLead){
         this.playerNum = 0;
         this.isLead = isLead;
         this.playerHand = new Hand();
+        this.suitUserChose = null;
     }
 
     @Override
@@ -63,20 +68,16 @@ public class UserPlayer implements Player {
 
     @Override
     public Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer) {
-        //Todo: this will alert Round class that the other player of this team will be sitting out
-        // SOMEHOW SOMEWAY GET USER INPUT :(
-//        Suit called = null;
-//        while(called == null){
-//            called = UIFunction();
-//        }
-        return new Pair<>(null, goAlone(topCard));
+        return new Pair<>(this.suitUserChose, goAlone(topCard));
+    }
+    public void setSuitUserChose(Suit choice){
+        this.suitUserChose = choice;
     }
 
     @Override
-    public Card playCard() {
-        int c = -1;
+    public Card playCard(int cardIndex) {
         //Todo: get user input... idk how
-        return playerHand.removeCard(c);
+        return playerHand.removeCard(cardIndex);
     }
 
     @Override
@@ -85,10 +86,8 @@ public class UserPlayer implements Player {
     }
 
     @Override
-    public void pickItUp(Card topCard){
-        //Todo: get user input on which card to remove
-        receiveCardFromDealer(topCard);
-
+    public void pickItUp(Card topCard, int indexOfOldCard){
+        this.playerHand.replaceCard(topCard, indexOfOldCard);
     }
 
     @Override

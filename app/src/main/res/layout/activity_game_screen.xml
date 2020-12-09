@@ -7,66 +7,6 @@
     android:background="@drawable/background"
     tools:context=".GameScreen">
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="55dp"
-        android:text="Diamond"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="55dp"
-        android:text="club"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="16dp"
-        android:text="spade"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="75dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="16dp"
-        android:text="Heart"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Deal"
-        android:onClick="start"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonOR"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonOL"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonOF" />
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="426dp"
@@ -76,6 +16,82 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/red" />
 
+    <Button
+        android:id="@+id/trumpDiamondsButton"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="55dp"
+        android:text="Diamonds"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/trumpClubsButton"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="55dp"
+        android:text="clubs"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/trumpSpadesButton"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="16dp"
+        android:text="spades"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/trumpHeartsButton"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="16dp"
+        android:text="Hearts"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="start"
+        android:text="Deal"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonOR"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOL"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonOF" />
+
+    <Button
+        android:id="@+id/trumpPassButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pass"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonOR"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOL"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonOF" />
+
     <ImageButton
         android:id="@+id/imageButtonTL"
         android:layout_width="99dp"
@@ -83,7 +99,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="357dp"
-        android:onClick="cardToPlayTL"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -96,7 +111,6 @@
         android:layout_marginStart="229dp"
         android:layout_marginLeft="229dp"
         android:layout_marginTop="520dp"
-        android:onClick="cardToPlayBR"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -109,7 +123,6 @@
         android:layout_marginStart="91dp"
         android:layout_marginLeft="91dp"
         android:layout_marginTop="520dp"
-        android:onClick="cardToPlayBL"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -122,7 +135,6 @@
         android:layout_marginStart="296dp"
         android:layout_marginLeft="296dp"
         android:layout_marginTop="357dp"
-        android:onClick="cardToPlayTR"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -132,7 +144,6 @@
         android:id="@+id/imageButtonOL"
         android:layout_width="99dp"
         android:layout_height="156dp"
-        android:onClick="cardToPlayTR"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +158,6 @@
         android:id="@+id/imageButtonOR"
         android:layout_width="99dp"
         android:layout_height="156dp"
-        android:onClick="cardToPlayTR"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +171,6 @@
         android:id="@+id/imageButtonOF"
         android:layout_width="99dp"
         android:layout_height="156dp"
-        android:onClick="cardToPlayTR"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -177,7 +186,6 @@
         android:layout_marginStart="156dp"
         android:layout_marginLeft="156dp"
         android:layout_marginTop="357dp"
-        android:onClick="cardToPlayTC"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -196,6 +204,7 @@
         android:textColor="#FB0000"
         android:textSize="18sp"
         android:textStyle="italic"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

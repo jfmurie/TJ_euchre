@@ -31,7 +31,7 @@ public interface Player {
      */
     Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer);
 
-    Card playCard();
+    Card playCard(int cardIndex);
 
     Card playCard(ArrayList<Card> cardsPlayed, Suit trump);
 
@@ -40,7 +40,7 @@ public interface Player {
      * the player picks up the top card and discards another.
      * @param topCard the card flipped up.
      */
-    void pickItUp(Card topCard);
+    void pickItUp(Card topCard, int indexOfOldCard);
 
     boolean isAI();
 }

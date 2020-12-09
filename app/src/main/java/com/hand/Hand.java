@@ -33,6 +33,15 @@ public class Hand {
         hand.add(dealtCard);
     }
 
+    public Card removeCard(int index){
+        return hand.remove(index);
+    }
+
+    public void replaceCard(Card newCard, int index){
+        this.hand.remove(index);
+        this.hand.add(index, newCard);
+    }
+
     //loop through array/arraylist of cards in the hand.
     public boolean hasTrump(Suit trump) {
         for(Card c:hand) {
@@ -227,10 +236,6 @@ public class Hand {
         return hand.size();
     }
 
-    public Card removeCard(int index){
-        return hand.remove(index);
-    }
-
     /**
      *
      * @return the suit that the player has the most cards of and the count of the suit
@@ -399,5 +404,4 @@ public class Hand {
         }
         return false;
     }
-
 }
