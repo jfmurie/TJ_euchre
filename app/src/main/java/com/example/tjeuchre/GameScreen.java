@@ -1,8 +1,10 @@
 package com.example.tjeuchre;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,6 +34,7 @@ public class GameScreen extends AppCompatActivity {
     private ImageButton imageButtonOL;
     private ImageButton imageButtonOR;
     private ImageButton imageButtonOF;
+    private ImageButton imageButtonCC;
     private Button      startButton;
     private Button      trumpPassButton;
     private Button      trumpHeartsButton;
@@ -39,7 +42,7 @@ public class GameScreen extends AppCompatActivity {
     private Button      trumpClubsButton;
     private Button      trumpSpadesButton;
 
-    long animationDuration = 300;//mili
+    long animationDuration = 300000;//mili
 
     Player[] players;
     Deck deck;
@@ -84,6 +87,7 @@ public class GameScreen extends AppCompatActivity {
         imageButtonOL       = (ImageButton) findViewById(R.id.imageButtonOL);
         imageButtonOR       = (ImageButton) findViewById(R.id.imageButtonOR);
         imageButtonOF       = (ImageButton) findViewById(R.id.imageButtonOF);
+        imageButtonCC       = (ImageButton) findViewById(R.id.imageButtonCC);
         startButton         = findViewById(R.id.startButton);
         trumpPassButton     = findViewById(R.id.trumpPassButton);
         trumpClubsButton    = findViewById(R.id.trumpClubsButton);
@@ -95,6 +99,7 @@ public class GameScreen extends AppCompatActivity {
         trumpPassButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 trumpPassButton.setVisibility(View.INVISIBLE);
+                imageButtonCC.setVisibility(View.INVISIBLE);
                 int timesAround = 0;
 
                 if(dealerIndex == 0 || topCardTurnedDown){
@@ -253,12 +258,17 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void moveCardToMiddle(ImageButton cardButton){
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(cardButton, "x", 400f);
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(cardButton, "y", 380f);
-        animatorX.setDuration(animationDuration);
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animatorX, animatorY);
-        animatorSet.start();
+        //currently this animation is unstable, sends cards all to different places
+        //current solution is to simply set the card to its new destination and forego the actual
+        //translation animation, as entertaining as it was
+        //ObjectAnimator animatorX = ObjectAnimator.ofFloat(cardButton, "x", 400);
+        //ObjectAnimator animatorY = ObjectAnimator.ofFloat(cardButton, "y", 380);
+        //animatorX.setDuration(animationDuration);
+        //AnimatorSet animatorSet = new AnimatorSet();
+        //animatorSet.playTogether(animatorX, animatorY);
+        //animatorSet.start();
+        cardButton.setX(400);
+        cardButton.setY(380);
     }
     public void setCardImage(ImageButton handCard, Suit suit, CardValue value){
         //Choose image to show based on player's card
@@ -368,7 +378,8 @@ public class GameScreen extends AppCompatActivity {
         setCardImage(imageButtonTR, hand.get(2).getSuit(), hand.get(2).getValue());
         setCardImage(imageButtonBL, hand.get(3).getSuit(), hand.get(3).getValue());
         setCardImage(imageButtonBR, hand.get(4).getSuit(), hand.get(4).getValue());
-        //TODO: show topCard to user
+
+
         return topCard;
     }
 
@@ -429,6 +440,8 @@ public class GameScreen extends AppCompatActivity {
 
     public void showCardUpSuitButton(){
         trumpPassButton.setVisibility(View.VISIBLE);
+        imageButtonCC.setVisibility(View.VISIBLE);
+        setCardImage(imageButtonCC, topCard.getSuit(), topCard.getValue());
         trumpPassButton.setEnabled(true);
 
         if(topCard.getSuit() == Suit.DIAMONDS){
@@ -478,6 +491,7 @@ public class GameScreen extends AppCompatActivity {
         trumpHeartsButton.setVisibility(View.INVISIBLE);
         trumpSpadesButton.setVisibility(View.INVISIBLE);
         trumpPassButton.setVisibility(View.INVISIBLE);
+        imageButtonCC.setVisibility(View.INVISIBLE);
     }
     public void enableAllTrumpButtons(){
         trumpClubsButton.setEnabled(true);
@@ -554,47 +568,59 @@ public class GameScreen extends AppCompatActivity {
         takeTurn();
     }
 
+
+
+
     public void takeTurn(){
-        //TODO: add wait periods after every AI play, about 2 - 5 seconds
+
 
         System.out.println("Player " + currentPlayerIndex + " is taking their turn.");
-        if(players[currentPlayerIndex].isAI()){
-            Card play = players[currentPlayerIndex].playCard(currentRound.getCurrentTrick().getPlayedCards(), currentRound.getTrump());
-            currentRound.getCurrentTrick().playerPlaysCard(play);
 
-            switch (currentPlayerIndex){
-                default:break;
-                case 1:
-                    setCardImage(imageButtonOL, play.getSuit(), play.getValue());
-                    break;
-                case 2:
-                    setCardImage(imageButtonOF, play.getSuit(), play.getValue());
-                    break;
-                case 3:
-                    setCardImage(imageButtonOR, play.getSuit(), play.getValue());
-                    break;
-            }
+        Handler h = new Handler();
+        h.postDelayed(new Runnable(){//waiting animation
+        public void run() {
+            if (players[currentPlayerIndex].isAI()) {
+                Card play = players[currentPlayerIndex].playCard(currentRound.getCurrentTrick().getPlayedCards(), currentRound.getTrump());
+                currentRound.getCurrentTrick().playerPlaysCard(play);
+                //waitingAnimation();
+                switch (currentPlayerIndex) {
+                    default:
+                        break;
+                    case 1:
+                        setCardImage(imageButtonOL, play.getSuit(), play.getValue());
+                        break;
+                    case 2:
+                        setCardImage(imageButtonOF, play.getSuit(), play.getValue());
+                        break;
+                    case 3:
+                        setCardImage(imageButtonOR, play.getSuit(), play.getValue());
+                        break;
+                }
 
-            //Move to next player or end trick
-            currentPlayerIndex = (currentPlayerIndex + 1) % 4;
-            if(players[currentPlayerIndex].isLead()){
-                endTrick();
-            }
-            else{
-                takeTurn();
+                //Move to next player or end trick
+                currentPlayerIndex = (currentPlayerIndex + 1) % 4;
+                if (players[currentPlayerIndex].isLead()) {
+                    endTrick();
+                } else {
+                    //waitingAnimation();
+                    takeTurn();
+                }
+            } else {
+                enableAllCardButtons();
+                //TODO: (optional?)
+                // If any of the player's cards are the led suit, disable all the others
+                //      else, keep all enabled that are still in hand
             }
         }
-        else{
-            enableAllCardButtons();
-            //TODO: (optional?)
-            // If any of the player's cards are the led suit, disable all the others
-            //      else, keep all enabled that are still in hand
-        }
+        }, 2000);
+
     }
 
     public void endTrick(){
-        //TODO: Show who won trick through UI and then wait for like 2-5 seconds
-
+        //TODO: Show who won trick through UI
+        Handler h = new Handler();
+        h.postDelayed(new Runnable(){//waiting animation
+            public void run() {
         //Make card played by user invisible
         if(cardTLPlayed){
             imageButtonTL.setVisibility(View.INVISIBLE);
@@ -639,6 +665,9 @@ public class GameScreen extends AppCompatActivity {
             resetOtherImageButtons();
             startTrick();
         }
+
+            }
+        }, 2000);
     }
     public void endRound(){
         System.out.println("Round over.");
