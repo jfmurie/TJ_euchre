@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.Round.Round;
 import com.Trick.Trick;
@@ -42,6 +43,9 @@ public class GameScreen extends AppCompatActivity {
     private Button      trumpClubsButton;
     private Button      trumpSpadesButton;
 
+    private TextView    userTeamScore;
+    private TextView    pureAITeamScore;
+
     long animationDuration = 300000;//mili
 
     Player[] players;
@@ -67,6 +71,8 @@ public class GameScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
+        userTeamScore = findViewById(R.id.T1Score);
+        pureAITeamScore = findViewById(R.id.T2Score);
         initializeButtons();
         initializeListeners();
         initializeGame();
@@ -674,8 +680,10 @@ public class GameScreen extends AppCompatActivity {
 
         //Add points to the correct team
         currentRound.awardPoints(userTeam, pureAITeam);
-        System.out.println("User Team has " + userTeam.getTeamScore() + " points.");
-        System.out.println("AI Team has " + pureAITeam.getTeamScore() + " points.");
+        userTeamScore.setText(userTeam.getTeamScore());
+        pureAITeamScore.setText(pureAITeam.getTeamScore());
+        //System.out.println("User Team has " + userTeam.getTeamScore() + " points.");
+        //System.out.println("AI Team has " + pureAITeam.getTeamScore() + " points.");
 
         resetImageButtons();
 

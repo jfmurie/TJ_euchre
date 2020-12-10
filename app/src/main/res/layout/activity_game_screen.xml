@@ -220,7 +220,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
-        android:fontFamily="@font/geostar_fill"
+        android:fontFamily="@font/archivo_black"
         android:text="Trump"
         android:textAllCaps="false"
         android:textColor="#FB0000"
@@ -228,6 +228,77 @@
         android:textStyle="italic"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/T1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Your Team:"
+        android:textColor="#FB0000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/T1Score"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOF"
+        app:layout_constraintTop_toBottomOf="@+id/ScoreBoard" />
+
+    <TextView
+        android:id="@+id/T2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Other Team:"
+        android:textColor="#FB0000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/T2Score"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOF"
+        app:layout_constraintTop_toBottomOf="@+id/T1" />
+
+    <TextView
+        android:id="@+id/T1Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="0"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/T1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/T2Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="0"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/T2"
+        app:layout_constraintTop_toBottomOf="@+id/T1Score" />
+
+    <TextView
+        android:id="@+id/ScoreBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Score"
+        android:textColor="#FB0000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOF"
         app:layout_constraintTop_toTopOf="parent" />
 
 
