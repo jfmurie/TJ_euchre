@@ -9,11 +9,14 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="426dp"
-        android:layout_height="426dp"
-        android:layout_marginTop="306dp"
+        android:layout_width="413dp"
+        android:layout_height="315dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/red" />
 
     <Button
@@ -86,58 +89,63 @@
         android:layout_height="wrap_content"
         android:text="Pass"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonOR"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonOL"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonOF" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424" />
 
     <ImageButton
         android:id="@+id/imageButtonTL"
         android:layout_width="99dp"
         android:layout_height="157dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="357dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.735"
         app:srcCompat="@drawable/cardback" />
 
     <ImageButton
         android:id="@+id/imageButtonBR"
         android:layout_width="99dp"
         android:layout_height="157dp"
-        android:layout_marginStart="229dp"
-        android:layout_marginLeft="229dp"
-        android:layout_marginTop="520dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.711"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/cardback" />
 
     <ImageButton
         android:id="@+id/imageButtonBL"
         android:layout_width="99dp"
         android:layout_height="157dp"
-        android:layout_marginStart="91dp"
-        android:layout_marginLeft="91dp"
-        android:layout_marginTop="520dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.291"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/cardback" />
 
     <ImageButton
         android:id="@+id/imageButtonTR"
         android:layout_width="99dp"
         android:layout_height="156dp"
-        android:layout_marginStart="296dp"
-        android:layout_marginLeft="296dp"
-        android:layout_marginTop="357dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737"
         app:srcCompat="@drawable/cardback" />
 
     <ImageButton
@@ -152,6 +160,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.203"
+        app:srcCompat="@drawable/cardback" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCC"
+        android:layout_width="99dp"
+        android:layout_height="156dp"
+        android:scaleType="centerCrop"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonOR"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOL"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonOF"
         app:srcCompat="@drawable/cardback" />
 
     <ImageButton
@@ -183,12 +204,13 @@
         android:id="@+id/imageButtonTC"
         android:layout_width="99dp"
         android:layout_height="157dp"
-        android:layout_marginStart="156dp"
-        android:layout_marginLeft="156dp"
-        android:layout_marginTop="357dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736"
         app:srcCompat="@drawable/cardback"
         tools:ignore="MissingPrefix" />
 
