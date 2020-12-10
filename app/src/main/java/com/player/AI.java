@@ -15,14 +15,12 @@ import java.util.ArrayList;
 
 public class AI implements Player {
     private int aiNum;
-    private int teammateNum;
     private boolean isLead;
     private Hand aiHand;
     private Pair<Suit, CardValue> HighestRemainingTrumpCard;
 
     public AI(){
         this.aiNum = 1;
-        this.teammateNum = 3;
         this.isLead = false;
         this.aiHand = new Hand();
         this.HighestRemainingTrumpCard = null;
@@ -30,16 +28,7 @@ public class AI implements Player {
 
     public AI(int num){
         this.aiNum = num;
-        this.teammateNum = (this.aiNum + 2) % 4;
         this.isLead = false;
-        this.aiHand = new Hand();
-        this.HighestRemainingTrumpCard = null;
-    }
-
-    public AI(int num, boolean lead){
-        this.aiNum = num;
-        this.teammateNum = (this.aiNum + 2) % 4;
-        this.isLead = lead;
         this.aiHand = new Hand();
         this.HighestRemainingTrumpCard = null;
     }
@@ -69,17 +58,6 @@ public class AI implements Player {
 
     public void setHighestRemainingTrumpCard(Suit s, CardValue v) {
         this.HighestRemainingTrumpCard = new Pair<>(s, v);
-    }
-
-    /**
-     * Ai cannot go Alone
-     *
-     * @param card the card that is turned up
-     * @return whether or not the AI is going alone
-     */
-    @Override
-    public boolean goAlone(Card card) {
-        return false;
     }
 
     @Override
@@ -349,6 +327,4 @@ public class AI implements Player {
     public boolean isAI(){
         return true;
     }
-
-
 }

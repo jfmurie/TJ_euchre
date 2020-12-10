@@ -60,23 +60,12 @@ public class UserPlayer implements Player {
     }
 
     @Override
-    public boolean goAlone(Card card) {
-        //Todo: Alert Round Class that only 3 people are playing
-        // AGAIN GET USER INPUT SOMEHOW
-        return false;
-    }
-
-    @Override
     public Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer) {
-        return new Pair<>(this.suitUserChose, goAlone(topCard));
-    }
-    public void setSuitUserChose(Suit choice){
-        this.suitUserChose = choice;
+        return new Pair<>(this.suitUserChose, false);
     }
 
     @Override
     public Card playCard(int cardIndex) {
-        //Todo: get user input... idk how
         return playerHand.removeCard(cardIndex);
     }
 

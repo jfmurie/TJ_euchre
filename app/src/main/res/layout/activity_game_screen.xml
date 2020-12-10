@@ -7,6 +7,22 @@
     android:background="@drawable/background"
     tools:context=".GameScreen">
 
+    <TextView
+        android:id="@+id/tricksTakenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Tricks Taken:"
+        android:textColor="#FB0000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/T1Score"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOF"
+        app:layout_constraintTop_toBottomOf="@+id/ScoreBoard" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="413dp"
@@ -266,6 +282,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="31dp"
         android:fontFamily="@font/archivo_black"
+        android:numeric="integer"
         android:text="0"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -279,6 +296,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/archivo_black"
+        android:numeric="integer"
         android:text="0"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -287,7 +305,35 @@
         app:layout_constraintTop_toBottomOf="@+id/T1Score" />
 
     <TextView
+        android:id="@+id/tricksTakenCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="0 - 0"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/T2"
+        app:layout_constraintTop_toBottomOf="@+id/T1Score" />
+
+    <TextView
         android:id="@+id/ScoreBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Score"
+        android:textColor="#FB0000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonOF"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/scoreBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

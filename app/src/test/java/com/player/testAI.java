@@ -312,7 +312,7 @@ public class testAI {
 
         Card cardUp = new Card(Suit.CLUBS, CardValue.NINE);
         Pair<Suit, Boolean> result = ai1.callTrump(cardUp, true, false);
-        Assert.assertNull(result.first);
+        Assert.assertEquals(result.first, Suit.PASS);
     }
 
     /**
@@ -332,7 +332,7 @@ public class testAI {
 
         Card cardUp = new Card(Suit.SPADES, CardValue.NINE);
         Pair<Suit, Boolean> result = ai1.callTrump(cardUp, true, false);
-        Assert.assertNull(result.first);
+        Assert.assertEquals(result.first, Suit.PASS);
     }
 
 }

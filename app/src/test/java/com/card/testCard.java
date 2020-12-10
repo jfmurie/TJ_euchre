@@ -79,4 +79,30 @@ public class testCard {
         card = new Card(Suit.DIAMONDS, CardValue.JACK);
         assertFalse(card.isTrump(Suit.CLUBS));
     }
+
+    @Test
+    public void testIsLeftBower_jackOfDiamonds_heartsIsTrump_returnsTrue() {
+        card = new Card(Suit.DIAMONDS, CardValue.JACK);
+        assertTrue(card.isLeftBower(Suit.HEARTS));
+    }
+
+    @Test
+    public void testIsLeftBower_jackOfHearts_trumpIsDiamonds_returnsTrue() {
+        card = new Card(Suit.HEARTS, CardValue.JACK);
+        assertTrue(card.isLeftBower(Suit.DIAMONDS));
+    }
+
+
+    @Test
+    public void testIsLeftBower_jackOfSpades_trumpIsClubs_returnsTrue() {
+        card = new Card(Suit.SPADES, CardValue.JACK);
+        assertTrue(card.isLeftBower(Suit.CLUBS));
+    }
+
+
+    @Test
+    public void testIsLeftBower_jackOfClubs_trumpIsSpades_returnsTrue() {
+        card = new Card(Suit.CLUBS, CardValue.JACK);
+        assertTrue(card.isLeftBower(Suit.SPADES));
+    }
 }

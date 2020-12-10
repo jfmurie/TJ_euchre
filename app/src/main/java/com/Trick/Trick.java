@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Trick {
     ArrayList<Card> playedCards;
 
-
     public Trick(){
         playedCards = new ArrayList<>();
     }
@@ -25,7 +24,6 @@ public class Trick {
     //try and use the AI method to get the winning card.
     private int getCurrentWinningCardIndex(Suit trump){
         int highestCardValue = 0;
-        Card highestCard = null;
         int index = 0;
         for(int i = 0; i < playedCards.size(); i++){
             if(playedCards.get(i).isRightBower(trump)){
@@ -71,36 +69,8 @@ public class Trick {
 
         int winningCardIndex = getCurrentWinningCardIndex(trump);
 
-        System.out.println("Lead Player Index: " + leadPlayer);
-        System.out.println("Winning Player: " + ((leadPlayer + winningCardIndex) % 4));
+//        System.out.println("Lead Player Index: " + leadPlayer);
+//        System.out.println("Winning Player: " + ((leadPlayer + winningCardIndex) % 4));
         return (leadPlayer + winningCardIndex) % 4;
-    }
-
-    /**
-     *
-     *
-     * @param players the players in the game
-     * @param lead index of player leading this trick
-     * @return the index of the player who took the trick
-     */
-    public int playTrick(Player[] players, int lead, Suit trump){
-        int playerIndex = lead;
-        ArrayList<Card> cardsPlayed = new ArrayList<>();
-
-        for(int i = 0; i < 4; i++){
-            Card c;
-            if(!players[playerIndex].isAI()){
-                c = players[playerIndex].playCard(-1);
-            }
-            else{
-                c = players[playerIndex].playCard(cardsPlayed, trump);
-                //Todo: call UI/animation method that shows what the AI played (c)
-            }
-            cardsPlayed.add(c);
-            playerIndex = (playerIndex + 1) % 4;
-        }
-
-        int winningCard = getCurrentWinningCardIndex(trump);
-        return (lead + winningCard)%4;
     }
 }

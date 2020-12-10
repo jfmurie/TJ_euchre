@@ -32,7 +32,6 @@ public class Team {
         this.tricksTaken = 0;
     }
 
-
     /**
      * This method returns the team's current score.
      *
@@ -41,7 +40,6 @@ public class Team {
     public int getTeamScore() {
         return this.teamScore;
     }
-
 
     public int getTricksTaken(){
         return this.tricksTaken;
@@ -53,15 +51,6 @@ public class Team {
 
     public boolean isPartOfTeam(Player player){
         return player == team[0] || player == team[1];
-    }
-
-    /**
-     * This is the getter method for the team array.
-     *
-     * @return Array with both players on the team.
-     */
-    public Player[] getTeam() {
-        return this.team;
     }
 
     /**
@@ -97,9 +86,6 @@ public class Team {
             this.teamScore += awarded_points;
             return this.teamScore;
         }
-        // @TODO testing baby
-        // should I throw an exception?
         else return awarded_points;
     }
-
 }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class Hand {
     ArrayList<Card> hand;
-    //cards get added to this when they are dealt
 
     public Hand() {
         hand = new ArrayList<>();
@@ -22,10 +21,6 @@ public class Hand {
 
     public ArrayList<Card> getHand() {
         return hand;
-    }
-
-    public void setHand(ArrayList<Card> newHand) {
-        hand = newHand;
     }
 
     //adds card as dealt
@@ -50,41 +45,6 @@ public class Hand {
             }
         }
         return false;
-    }
-
-    public boolean hasSuit(Suit s){
-        for(Card c:hand) {
-            if(c.getSuit() == s) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    //for these does this mean that a jack will always be highest or
-    //does it count trump so trump 10 is higher than non-trump queen?
-    //Trump counts higher than others
-    public Card getHighestCard() {
-        //loop through all cards and find the highest value card
-        int temp = 0;
-        for(int i = 0; i < hand.size(); i++){
-            if(hand.get(temp).getValue().getNumericalValue() < hand.get(i+1).getValue().getNumericalValue()) {
-                temp = i+1;
-            }
-        }
-        return hand.get(temp);
-    }
-
-    public int getHighestCardIndex() {
-        //loop through all cards and find the highest value card
-        int index = 0;
-        for(int i = 0; i < hand.size(); i++){
-            if(hand.get(index).getValue().getNumericalValue() < hand.get(i+1).getValue().getNumericalValue()) {
-                index = i+1;
-            }
-        }
-        return index;
     }
 
     public Card getHighestTrump(Suit trump) {

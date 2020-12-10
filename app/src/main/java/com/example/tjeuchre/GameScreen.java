@@ -1,8 +1,5 @@
 package com.example.tjeuchre;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.util.Pair;
@@ -45,6 +42,7 @@ public class GameScreen extends AppCompatActivity {
 
     private TextView    userTeamScore;
     private TextView    pureAITeamScore;
+    private TextView    tricksTakenCounter;
 
     long animationDuration = 300000;//mili
 
@@ -71,8 +69,9 @@ public class GameScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
-        userTeamScore = findViewById(R.id.T1Score);
-        pureAITeamScore = findViewById(R.id.T2Score);
+        userTeamScore      = (TextView) findViewById(R.id.T1Score);
+        pureAITeamScore    = (TextView) findViewById(R.id.T2Score);
+        tricksTakenCounter = (TextView) findViewById(R.id.tricksTakenCounter);
         initializeButtons();
         initializeListeners();
         initializeGame();
@@ -574,12 +573,7 @@ public class GameScreen extends AppCompatActivity {
         takeTurn();
     }
 
-
-
-
     public void takeTurn(){
-
-
         System.out.println("Player " + currentPlayerIndex + " is taking their turn.");
 
         Handler h = new Handler();
@@ -644,7 +638,6 @@ public class GameScreen extends AppCompatActivity {
             imageButtonBR.setVisibility(View.INVISIBLE);
         }
 
-
         //find winner
         currentPlayerIndex = currentRound.getCurrentTrick().getWinningPlayerIndex(players, currentRound.getTrump());
         System.out.println("Trick over. Player " + currentPlayerIndex + " won the trick.");
@@ -656,6 +649,10 @@ public class GameScreen extends AppCompatActivity {
         else if(pureAITeam.isPartOfTeam(players[currentPlayerIndex])){
             pureAITeam.incrementTricksTaken();
         }
+
+        //Update tricksTaken on screen
+        String tricksTakenStr = userTeam.getTricksTaken() + " - " + pureAITeam.getTricksTaken();
+        tricksTakenCounter.setText(tricksTakenStr);
 
         //Set who leads next trick
         for(Player p:players){
@@ -680,8 +677,14 @@ public class GameScreen extends AppCompatActivity {
 
         //Add points to the correct team
         currentRound.awardPoints(userTeam, pureAITeam);
-        userTeamScore.setText(userTeam.getTeamScore());
-        pureAITeamScore.setText(pureAITeam.getTeamScore());
+        String score = Integer.toString(userTeam.getTeamScore());
+        userTeamScore.setText(score);
+        score = Integer.toString(pureAITeam.getTeamScore());
+        pureAITeamScore.setText(score);
+
+        //Update tricksTaken on screen
+        tricksTakenCounter.setText("0 - 0");
+
         //System.out.println("User Team has " + userTeam.getTeamScore() + " points.");
         //System.out.println("AI Team has " + pureAITeam.getTeamScore() + " points.");
 
@@ -728,7 +731,6 @@ public class GameScreen extends AppCompatActivity {
             System.out.println("YOU LOST");
         }
     }
-
 
     public void resetImageButtons(){
         //Reset Card/image buttons to original position

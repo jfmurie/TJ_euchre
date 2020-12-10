@@ -16,8 +16,6 @@ public interface Player {
     ArrayList<Card> getPlayerHand();
     void receiveCardFromDealer(Card dealtCard);
 
-    boolean goAlone(Card card);
-
     /**
      * Calls trump and whether or not the player will be going alone.
      * If the player is a dealer and the topCard has been turned down,
@@ -32,7 +30,6 @@ public interface Player {
     Pair<Suit, Boolean> callTrump(Card topCard, boolean topCardTurnedDown, boolean dealer);
 
     Card playCard(int cardIndex);
-
     Card playCard(ArrayList<Card> cardsPlayed, Suit trump);
 
     /**
