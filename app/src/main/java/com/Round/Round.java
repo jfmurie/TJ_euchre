@@ -20,6 +20,7 @@ public class Round {
 
     /**
      * Constructor for the Round class.
+     * plus assorted getter/setters for round
      */
     public Round() {
         this.tricksPlayed = 0;
@@ -52,6 +53,17 @@ public class Round {
         return this.trump;
     }
 
+    /**
+     *
+     * @param team1
+     * User team
+     * @param team2
+     * Pure AI team
+     *
+     * This method is called after a full round and awards the winning team
+     * points based on how many tricks they won during the round.
+     */
+
     public void awardPoints(Team team1, Team team2){
         if(this.teamCalledTrump == team1){
             if(team1.getTricksTaken() == 5){
@@ -83,6 +95,10 @@ public class Round {
         }
     }
 
+    /**
+     * Helps to update the AI decision making by telling them what the highest trump card remaining is
+     * @param players
+     */
     public void updateAIOnHRTC(Player[] players){
         for (Player p: players) {
             if(p.isAI()){

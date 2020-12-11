@@ -21,7 +21,15 @@ public class Trick {
         return playedCards;
     }
 
-    //try and use the AI method to get the winning card.
+    /**
+     *
+     * @param trump
+     * @return index of winning card
+     * Called by getWinningPlayerIndex and looks at the cards played during that trick
+     * it picks the card that has the highest value for that round
+     * This means that trump cards are valued more and non suit cards are less.
+     * Then it returns the index of the card that wins the trick
+     */
     private int getCurrentWinningCardIndex(Suit trump){
         int highestCardValue = 0;
         int index = 0;
@@ -50,10 +58,20 @@ public class Trick {
                 index = i;
             }
         }
-        System.out.println("Winning Card: " + this.playedCards.get(index).getValue() + " of " + this.playedCards.get(index).getSuit());
-        System.out.println("Winning Card Index: " + index);
+//        System.out.println("Winning Card: " + this.playedCards.get(index).getValue() + " of " + this.playedCards.get(index).getSuit());
+//        System.out.println("Winning Card Index: " + index);
         return index;
     }
+
+    /**
+     *
+     * @param players
+     * @param trump
+     * @return Winning player index
+     * Grabs the array of players and the current trump suit
+     * Then it calls getCurrentWinningCardIndex() and once that returns which card wins the trick
+     * it determines which player played the winning card and returns their index.
+     */
 
     public int getWinningPlayerIndex(Player[] players, Suit trump){
         int leadPlayer = -1;
