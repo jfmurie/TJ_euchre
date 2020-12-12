@@ -19,17 +19,13 @@ public class UserPlayer implements Player {
     private Hand playerHand;
     private Suit suitUserChose;
 
-
+    /**
+     * default constuctor
+     * playerNum is always 0 because user index will always be zero
+     */
     public UserPlayer(){
         this.playerNum = 0;
         this.isLead = false;
-        this.playerHand = new Hand();
-        this.suitUserChose = null;
-    }
-
-    public UserPlayer(boolean isLead){
-        this.playerNum = 0;
-        this.isLead = isLead;
         this.playerHand = new Hand();
         this.suitUserChose = null;
     }

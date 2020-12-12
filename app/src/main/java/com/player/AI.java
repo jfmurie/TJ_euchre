@@ -19,6 +19,10 @@ public class AI implements Player {
     private Hand aiHand;
     private Pair<Suit, CardValue> HighestRemainingTrumpCard;
 
+    /**
+     * default constructor
+     * aiNum defaults to 1
+     */
     public AI(){
         this.aiNum = 1;
         this.isLead = false;
@@ -26,6 +30,11 @@ public class AI implements Player {
         this.HighestRemainingTrumpCard = null;
     }
 
+    /**
+     * constructor to set aiNum (playerNum)
+     *
+     * @param num the index assigned to this AI
+     */
     public AI(int num){
         this.aiNum = num;
         this.isLead = false;
@@ -56,6 +65,14 @@ public class AI implements Player {
         aiHand.addCard(dealtCard);
     }
 
+    /**
+     * HighestRemainingTrumpCard is the highest trump card that COULD be played in the eyes of the AI
+     * because every CardValue of trump about this card has been played.
+     * This Pair variable is reset to the right bower of trump every time trump is called.
+     *
+     * @param s trump
+     * @param v CardValue
+     */
     public void setHighestRemainingTrumpCard(Suit s, CardValue v) {
         this.HighestRemainingTrumpCard = new Pair<>(s, v);
     }
@@ -65,6 +82,19 @@ public class AI implements Player {
         return decideTrump(topCard, topCardTurnedDown, dealer);
     }
 
+    /**
+     * Method to determine suit AI should call for trump (or pass)
+     * If AI is dealer, the AI will call trump as the suit they have the most of,
+     * given that suit is not the suit of the card that was turned down.
+     * If AI is not dealer, the AI will call trump if they have 3 trump (one is bower), or 4+ trump.
+     *
+     * Note: goAlone functionality was discarded.
+     *
+     * @param cardUp the card that can be called to be picked up by dealer or turned down
+     * @param topCardTurnedDown whether or not that cardUp has been turned down
+     * @param dealer whther or not AI is dealer
+     * @return the suit/pass for trump and a boolean to tell if AI is going alone (this is always false)
+     */
     public Pair<Suit, Boolean> decideTrump(Card cardUp, boolean topCardTurnedDown, boolean dealer) {
         Pair<Suit, Integer> mostSuitAndCount = aiHand.mostCardsOfThisSuit();
 
@@ -174,11 +204,21 @@ public class AI implements Player {
                     cardIndex = aiHand.getHand().indexOf(highestTrump);
                 }
                 else{
-                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestNonTrump(trump));
+                    if(aiHand.getCountOfSuit(trump, true) == aiHand.handSize()){
+                        cardIndex = aiHand.getHand().indexOf(aiHand.getHighestTrump(trump));
+                    }
+                    else {
+                        cardIndex = aiHand.getHand().indexOf(aiHand.getHighestNonTrump(trump));
+                    }
                 }
             }
             else {
-                cardIndex = aiHand.getHand().indexOf(aiHand.getHighestNonTrump(trump));
+                if(aiHand.getCountOfSuit(trump, true) == aiHand.handSize()){
+                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestTrump(trump));
+                }
+                else {
+                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestNonTrump(trump));
+                }
             }
         }
         else {
@@ -202,40 +242,65 @@ public class AI implements Player {
              */
             /* else play off */
             Suit suitLead = cardsPlayed.get(0).getSuit();
-
-            if (suitLead == trump) {
+            //If trump led
+            if (cardsPlayed.get(0).isTrump(trump)) {
                 if (!aiHand.hasTrump(trump)) {
                     cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump(trump));
                 }
                 else {
                     Card highestAITrump = aiHand.getHighestTrump(trump);
                     CardValue highestTrumpPlayed = CardValue.NINE;
+                    //get highest trump played
                     for (Card c : cardsPlayed) {
-                        if (c.getValue().getNumericalValue() > highestTrumpPlayed.getNumericalValue()) {
-                            highestTrumpPlayed = c.getValue();
+                        if(c.isTrump(trump)){
+                            if(c.isRightBower(trump) || c.isLeftBower(trump)){
+                                highestTrumpPlayed = CardValue.JACK;
+                                break;
+                            }
+                            if (c.getValue().getNumericalValue() > highestTrumpPlayed.getNumericalValue()) {
+                                highestTrumpPlayed = c.getValue();
+                            }
                         }
                     }
-                    if (highestTrumpPlayed.getNumericalValue() < highestAITrump.getValue().getNumericalValue()) {
+
+                    if(highestAITrump.isRightBower(trump)
+                            || (highestAITrump.isLeftBower(trump) && highestTrumpPlayed != CardValue.JACK)){
+                        cardIndex = aiHand.getHand().indexOf(highestAITrump);
+                    }
+                    else if(highestTrumpPlayed == CardValue.JACK){
+                        cardIndex = aiHand.getHand().indexOf(aiHand.getLowestTrump(trump));
+                    }
+                    else if (highestTrumpPlayed.getNumericalValue() < highestAITrump.getValue().getNumericalValue()) {
                         cardIndex = aiHand.getHand().indexOf(highestAITrump);
                     } else {
                         cardIndex = aiHand.getHand().indexOf(aiHand.getLowestTrump(trump));
                     }
                 }
             }
+            //If AI can follow suit
             else if(aiHand.hasSuit(suitLead, trump)){
-                if(aiHand.getHighestofSuit(suitLead).getValue().getNumericalValue() <
-                        cardsPlayed.get(getCurrentWinningCardIndex(cardsPlayed,trump)).getValue().getNumericalValue()){
+                Card highestOfSuit = aiHand.getHighestofSuit(suitLead);
+                int tm8PlayIndex = getTeammatesPlayIndex(cardsPlayed.size());
+                int winningCardIndex = getCurrentWinningCardIndex(cardsPlayed, trump);
+
+                //If teammate has trick so far or AI can't win trick
+                if(tm8PlayIndex == winningCardIndex
+                        || (highestOfSuit.getValue().getNumericalValue() < cardsPlayed.get(winningCardIndex).getValue().getNumericalValue()
+                            && !cardsPlayed.get(winningCardIndex).isTrump(trump))){
                     cardIndex = aiHand.getHand().indexOf(aiHand.getLowestofSuit(suitLead));
                 }
                 else {
-                    cardIndex = aiHand.getHand().indexOf(aiHand.getHighestofSuit(suitLead));
+                    cardIndex = aiHand.getHand().indexOf(highestOfSuit);
                 }
             }
+            //If AI can trump
             else if(aiHand.hasTrump(trump)){
                 int tm8PlayIndex = getTeammatesPlayIndex(cardsPlayed.size());
                 int winningCardIndex = getCurrentWinningCardIndex(cardsPlayed, trump);
 
+                //if teammate has trick
                 if(tm8PlayIndex == winningCardIndex){
+                    //if AI can only play trump
                     if(aiHand.getCountOfSuit(trump, true) == aiHand.handSize()){
                         cardIndex = aiHand.getHand().indexOf(aiHand.getLowestTrump(trump));
                     }
@@ -243,22 +308,43 @@ public class AI implements Player {
                         cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump(trump));
                     }
                 }
-                else if(cardsPlayed.get(winningCardIndex).getSuit() == trump){
+                else if(cardsPlayed.get(winningCardIndex).isTrump(trump)){
                     Card aiHighestTrump = aiHand.getHighestTrump(trump);
-                    System.out.println("Made it here to the right else if.");
-                    if(cardsPlayed.get(winningCardIndex).getValue().getNumericalValue() < aiHighestTrump.getValue().getNumericalValue()) {
+                    Card winningCard = cardsPlayed.get(winningCardIndex);
+
+                    //if no bowers played
+                    if( !(winningCard.isRightBower(trump) || winningCard.isLeftBower(trump))){
+                        if(winningCard.getValue().getNumericalValue() < aiHighestTrump.getValue().getNumericalValue()){
+                            cardIndex = aiHand.getHand().indexOf(aiHighestTrump);
+                        }
+                        else if(aiHand.getCountOfSuit(trump, true) == aiHand.handSize()){
+                            cardIndex = aiHand.getHand().indexOf(aiHand.getLowestTrump(trump));
+                        }
+                        else{
+                            cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump(trump));
+                        }
+                    }
+                    //if a bower played and AI can't beat it
+                    else if(winningCard.isRightBower(trump)
+                            ||(winningCard.isLeftBower(trump) && !aiHighestTrump.isRightBower(trump))){
+                        //If only trump in hand
+                        if(aiHand.getCountOfSuit(trump, true) == aiHand.handSize()){
+                            cardIndex = aiHand.getHand().indexOf(aiHand.getLowestTrump(trump));
+                        }
+                        else{
+                            cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump(trump));
+                        }
+                    }
+                    //AI can play right bower
+                    else{
                         cardIndex = aiHand.getHand().indexOf(aiHighestTrump);
                     }
-                    else if(aiHand.getCountOfSuit(trump, true) == aiHand.handSize()){
-                        cardIndex = aiHand.getHand().indexOf(aiHand.getLowestTrump(trump));
-                    }
-                    else{
-                        cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump(trump));
-                    }
-                } else {
+                }
+                else {
                     cardIndex = aiHand.getHand().indexOf(aiHand.getLowestTrump(trump));
                 }
             }
+            //Else, play off
             else{
                 cardIndex = aiHand.getHand().indexOf(aiHand.getLowestNonTrump(trump));
             }
@@ -266,7 +352,13 @@ public class AI implements Player {
         return aiHand.removeCard(cardIndex);
     }
 
-    //helper method for AI Logic
+    /**
+     * Helper method for determinePlay()
+     * Gets the index of the card the player's teammate played in cardsPlayed arrayList
+     *
+     * @param cardsPlayedNum the size of the arrayList
+     * @return the index of teammate's play
+     */
     private int getTeammatesPlayIndex(int cardsPlayedNum){
         switch (cardsPlayedNum){
             //Teammate has played
@@ -282,7 +374,14 @@ public class AI implements Player {
         }
     }
 
-    //helper method for AI Logic
+    /**
+     * Helper method for determinePlay()
+     * Gets the index of the card in cardsPlayed that would currently take the trick.
+     *
+     * @param cardsPlayed An arrayList of the cards played by other players thus far
+     * @param trump suit that was called as trump for the round
+     * @return the index of winning card
+     */
     private int getCurrentWinningCardIndex(ArrayList<Card> cardsPlayed, Suit trump){
         int highestCardValue = 0;
         Card highestCard = null;

@@ -19,7 +19,6 @@ public class testUserPlayer {
         testCards.add(new Card(Suit.DIAMONDS, CardValue.KING));
 
         UserPlayer user = new UserPlayer();
-        //user.getCards(testCards);
 
         for(Card c : user.getPlayerHand()){
             Assert.assertEquals(c,testCards.remove(0));

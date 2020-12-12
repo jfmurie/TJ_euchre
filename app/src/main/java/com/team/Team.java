@@ -45,6 +45,11 @@ public class Team {
         return this.tricksTaken;
     }
 
+    public void resetTricksTaken(){
+        this.tricksTaken = 0;
+    }
+
+
     public void incrementTricksTaken(){
         this.tricksTaken++;
     }

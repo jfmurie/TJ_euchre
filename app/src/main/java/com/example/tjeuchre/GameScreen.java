@@ -43,6 +43,7 @@ public class GameScreen extends AppCompatActivity {
     private TextView    userTeamScore;
     private TextView    pureAITeamScore;
     private TextView    tricksTakenCounter;
+    private TextView    instructionText;
 
     long animationDuration = 300000;//mili
 
@@ -56,7 +57,7 @@ public class GameScreen extends AppCompatActivity {
     boolean userHasToReplaceCard;
     boolean topCardTurnedDown;
     Card topCard;
-    final int maxPoints = 3;    //TODO: change this back to 10, it is at 3 for quicker testing
+    final int maxPoints = 10;
 
     boolean cardTLPlayed;
     boolean cardTCPlayed;
@@ -64,6 +65,11 @@ public class GameScreen extends AppCompatActivity {
     boolean cardBLPlayed;
     boolean cardBRPlayed;
 
+    /**
+     * Initializes all necessary values
+     *
+     * @param savedInstanceState the instance of the screen
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +78,7 @@ public class GameScreen extends AppCompatActivity {
         userTeamScore      = (TextView) findViewById(R.id.T1Score);
         pureAITeamScore    = (TextView) findViewById(R.id.T2Score);
         tricksTakenCounter = (TextView) findViewById(R.id.tricksTakenCounter);
+        instructionText    = (TextView) findViewById(R.id.instructionText);
         initializeButtons();
         initializeListeners();
         initializeGame();
@@ -83,6 +90,10 @@ public class GameScreen extends AppCompatActivity {
         cardBRPlayed = false;
     }
 
+    /**
+     * Initializes all image buttons, trump calling buttons, and the start button
+     * (aka the global variables that represent them)
+     */
     public void initializeButtons(){
         imageButtonTL       = (ImageButton) findViewById(R.id.imageButtonTL);
         imageButtonTC       = (ImageButton) findViewById(R.id.imageButtonTC);
@@ -100,6 +111,10 @@ public class GameScreen extends AppCompatActivity {
         trumpHeartsButton   = findViewById(R.id.trumpHeartsButton);
         trumpSpadesButton   = findViewById(R.id.trumpSpadesButton);
     }
+
+    /**
+     * Initializes listeners and gives logic for when each button is clicked
+     */
     public void initializeListeners(){
         trumpPassButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -202,7 +217,17 @@ public class GameScreen extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * logic for when an image button/card is clicked
+     *
+     * @param button button clicked
+     * @param cardIndex index of card in hav=nd that the button represents
+     */
     public void imageButtonClicked(ImageButton button, int cardIndex){
+        String text = "";
+        instructionText.setText(text);
+
         //User chose this card to be replaced by the topCard
         if(dealerIndex == 0 && userHasToReplaceCard){
             switch (cardIndex){
@@ -262,6 +287,11 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to move an image button to the middle
+     *
+     * @param cardButton the button to be moved
+     */
     public void moveCardToMiddle(ImageButton cardButton){
         //currently this animation is unstable, sends cards all to different places
         //current solution is to simply set the card to its new destination and forego the actual
@@ -275,6 +305,14 @@ public class GameScreen extends AppCompatActivity {
         cardButton.setX(400);
         cardButton.setY(380);
     }
+
+    /**
+     * sets the image for an image button to one of the card images
+     *
+     * @param handCard the button to change image of
+     * @param suit the suit of the card image wanted
+     * @param value the value of the card image wanted
+     */
     public void setCardImage(ImageButton handCard, Suit suit, CardValue value){
         //Choose image to show based on player's card
         if (suit == Suit.HEARTS){
@@ -339,10 +377,19 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * When the deal/start button is clicked
+     *
+     * @param view button
+     */
     public void start(View view) {
         startButton.setVisibility(View.INVISIBLE);
         startRound();
     }
+
+    /**
+     * initialize variables for the game
+     */
     public void initializeGame(){
         Player userPlayer = new UserPlayer();
         Player ai1 = new AI(1);
@@ -360,18 +407,47 @@ public class GameScreen extends AppCompatActivity {
         userHasToReplaceCard = false;
         disableAllCardButtons();
         hideAllTrumpButtons();
+
+        String text = "Click 'Deal' to start the game.";
+        instructionText.setText(text);
     }
+
+    /**
+     * (re)initialize variables for new round
+     * call trump method
+     */
     public void startRound(){
         if(userTeam.getTeamScore() < maxPoints && pureAITeam.getTeamScore() < maxPoints){
-            System.out.println("Starting a new round.");
-            System.out.println("Dealer is Player " + dealerIndex);
+            String text = "";
+            switch (dealerIndex){
+                case 0:
+                    text = "New Round has begun. You are the dealer";
+                    break;
+                case 1:
+                    text = "New Round has begun. Dealer is left of you.";
+                    break;
+                case 2:
+                    text = "New Round has begun. Dealer is your teammate.";
+                    break;
+                case 3:
+                    text = "New Round has begun. Dealer is right of you.";
+                    break;
+                default: break;
+            }
+            instructionText.setText(text);
+
             currentRound = new Round();
             topCard = dealCards();
             printHands();
-            System.out.println("Top Card is: " + topCard.getValue() + " of " + topCard.getSuit());
             callTrump(0);
         }
     }
+
+    /**
+     * method to deal cards and show correct cards to user
+     *
+     * @return topCard
+     */
     public Card dealCards(){
         deck.shuffleDeck();
 
@@ -388,14 +464,16 @@ public class GameScreen extends AppCompatActivity {
         return topCard;
     }
 
+    /**
+     * Method to ask player to call trump
+     *
+     * @param timesAround number of times around the "table"
+     */
     public void callTrump(int timesAround){
-        System.out.println("\nAsking Player " + currentPlayerIndex + " to call Trump for the " + timesAround + " time.");
         Pair<Suit, Boolean> result;
 
         if(players[currentPlayerIndex].isAI()){
-            System.out.println("The Player is an AI.");
             result = players[currentPlayerIndex].callTrump(topCard, timesAround == 1, currentPlayerIndex == dealerIndex);
-            System.out.println("The Player chose trump as:" + result.first + ".");
             if(result.first != Suit.PASS){
                 if(currentPlayerIndex % 2 == 0){
                     trumpCalled(result.first, userTeam);
@@ -419,7 +497,6 @@ public class GameScreen extends AppCompatActivity {
             }
         }
         else{
-            System.out.println("The Player is the USER.");
             if(timesAround == 0){
                 showCardUpSuitButton();
             }
@@ -428,7 +505,17 @@ public class GameScreen extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * when trump is called, tell backend, and call pickItUp or startTrick()
+     *
+     * @param trump suit that's been called
+     * @param teamCalled team that called it
+     */
     public void trumpCalled(Suit trump, Team teamCalled){
+        String text = "Trump has been called as: " + trump;
+        instructionText.setText(text);
+
         currentRound.setTrump(trump);
         currentRound.setTeamCalledTrump(teamCalled);
         currentRound.updateAIOnHRTC(players);
@@ -443,6 +530,9 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * show only the suit  trumpbutton for user to click or pass
+     */
     public void showCardUpSuitButton(){
         trumpPassButton.setVisibility(View.VISIBLE);
         imageButtonCC.setVisibility(View.VISIBLE);
@@ -466,6 +556,13 @@ public class GameScreen extends AppCompatActivity {
             trumpClubsButton.setEnabled(true);
         }
     }
+
+    /**
+     * show all other buttons other than the suit of the topCard
+     * if user is dealer, do not show pass button
+     *
+     * @param screwTheDealer whether or not the dealer/user HAS to pick a trump
+     */
     public void showOtherTrumpButtons(boolean screwTheDealer){
         hideAllTrumpButtons();
         if(topCard.getSuit() != Suit.DIAMONDS){
@@ -490,6 +587,11 @@ public class GameScreen extends AppCompatActivity {
             trumpPassButton.setEnabled(true);
         }
     }
+
+    /**
+     * hide all trump buttons
+     * Used for resets, usually
+     */
     public void hideAllTrumpButtons(){
         trumpClubsButton.setVisibility(View.INVISIBLE);
         trumpDiamondsButton.setVisibility(View.INVISIBLE);
@@ -498,6 +600,11 @@ public class GameScreen extends AppCompatActivity {
         trumpPassButton.setVisibility(View.INVISIBLE);
         imageButtonCC.setVisibility(View.INVISIBLE);
     }
+
+    /**
+     * enable all Trump Buttons
+     * used for reset usually
+     */
     public void enableAllTrumpButtons(){
         trumpClubsButton.setEnabled(true);
         trumpDiamondsButton.setEnabled(true);
@@ -505,6 +612,10 @@ public class GameScreen extends AppCompatActivity {
         trumpSpadesButton.setEnabled(true);
         trumpPassButton.setEnabled(true);
     }
+
+    /**
+     * hide the buttons that do not represent trump
+     */
     public void hideNonTrumpButtons(){
         hideAllTrumpButtons();
         switch(this.currentRound.getTrump()){
@@ -529,9 +640,19 @@ public class GameScreen extends AppCompatActivity {
                 break;
         }
     }
+
+    /**
+     * disable a specific image/card button
+     *
+     * @param btn the button to disable
+     */
     public void disableCardButton(ImageButton btn){
         btn.setEnabled(false);
     }
+
+    /**
+     * disable all image/card buttons so User cannot click them
+     */
     public void disableAllCardButtons(){
         disableCardButton(imageButtonTL);
         disableCardButton(imageButtonTC);
@@ -539,9 +660,18 @@ public class GameScreen extends AppCompatActivity {
         disableCardButton(imageButtonBL);
         disableCardButton(imageButtonBR);
     }
+
+    /**
+     * enable specific image/card button
+     * @param btn button to enable
+     */
     public void enableCardButton(ImageButton btn){
         btn.setEnabled(true);
     }
+
+    /**
+     * enable all card/image buttons
+     */
     public void enableAllCardButtons(){
         enableCardButton(imageButtonTL);
         enableCardButton(imageButtonTC);
@@ -550,8 +680,11 @@ public class GameScreen extends AppCompatActivity {
         enableCardButton(imageButtonBR);
     }
 
+    /**
+     * Called when topCard's suit is called as trump
+     * the dealer has to discard a card and pick up the top card into hand
+     */
     public void pickItUp(){
-        System.out.println("Player " + dealerIndex + " must pick up the top card.");
         if(players[dealerIndex].isAI()){
             players[dealerIndex].pickItUp(topCard, -1); //The index value does not matter here
 
@@ -559,22 +692,31 @@ public class GameScreen extends AppCompatActivity {
             startTrick();
         }
         else{
+            String text = "You are dealer. Please choose a card to discard.";
+            instructionText.setText(text);
 
-            //TODO: show instruction text ("Please choose a card to discard.")
             enableAllCardButtons();
             userHasToReplaceCard = true;
         }
     }
 
+    /**
+     * start a new trick,
+     * set who is leading and call their turn to happen
+     */
     public void startTrick(){
-        System.out.println("New Trick has started, led by Player " + currentPlayerIndex + ".");
+        //System.out.println("New Trick has started, led by Player " + currentPlayerIndex + ".");
         currentRound.setCurrentTrick(new Trick());
         players[currentPlayerIndex].setLead(true);
         takeTurn();
     }
 
+    /**
+     * have current player to take their turn to play a card
+     */
     public void takeTurn(){
-        System.out.println("Player " + currentPlayerIndex + " is taking their turn.");
+        String text = "";
+        instructionText.setText(text);
 
         Handler h = new Handler();
         h.postDelayed(new Runnable(){//waiting animation
@@ -606,18 +748,21 @@ public class GameScreen extends AppCompatActivity {
                     takeTurn();
                 }
             } else {
+                String text = "Please choose a card to play.";
+                instructionText.setText(text);
                 enableAllCardButtons();
-                //TODO: (optional?)
-                // If any of the player's cards are the led suit, disable all the others
-                //      else, keep all enabled that are still in hand
             }
         }
         }, 2000);
 
     }
 
+    /**
+     * reset needed values
+     * if 5 tricks have been played, end the round
+     * else, just start next trick
+     */
     public void endTrick(){
-        //TODO: Show who won trick through UI
         Handler h = new Handler();
         h.postDelayed(new Runnable(){//waiting animation
             public void run() {
@@ -640,7 +785,25 @@ public class GameScreen extends AppCompatActivity {
 
         //find winner
         currentPlayerIndex = currentRound.getCurrentTrick().getWinningPlayerIndex(players, currentRound.getTrump());
-        System.out.println("Trick over. Player " + currentPlayerIndex + " won the trick.");
+
+        String text = "";
+        switch (currentPlayerIndex){
+            case 0:
+                text = "Trick over. You won the trick.";
+                break;
+            case 1:
+                text = "Trick over. Player left of you took the trick.";
+                break;
+            case 2:
+                text = "Trick over. Your teammate took the trick.";
+                break;
+            case 3:
+                text = "Trick over. Player right of you took the trick.";
+                break;
+            default: break;
+        }
+        instructionText.setText(text);
+
 
         //Increment respective teams tricksTaken value
         if(userTeam.isPartOfTeam(players[currentPlayerIndex])){
@@ -672,8 +835,16 @@ public class GameScreen extends AppCompatActivity {
             }
         }, 2000);
     }
+
+    /**
+     * award points, reset all buttons, update scoreboard
+     * if game it over, call gameOver
+     * else start new round, moving dealerIndex by 1
+     */
     public void endRound(){
-        System.out.println("Round over.");
+
+        String text = "Round over. Click Deal to continue";
+        instructionText.setText(text);
 
         //Add points to the correct team
         currentRound.awardPoints(userTeam, pureAITeam);
@@ -684,9 +855,8 @@ public class GameScreen extends AppCompatActivity {
 
         //Update tricksTaken on screen
         tricksTakenCounter.setText("0 - 0");
-
-        //System.out.println("User Team has " + userTeam.getTeamScore() + " points.");
-        //System.out.println("AI Team has " + pureAITeam.getTeamScore() + " points.");
+        userTeam.resetTricksTaken();
+        pureAITeam.resetTricksTaken();
 
         resetImageButtons();
 
@@ -720,18 +890,25 @@ public class GameScreen extends AppCompatActivity {
             endGame();
         }
     }
+
+    /**
+     * tell who won and endGame
+     */
     public void endGame(){
         startButton.setVisibility(View.INVISIBLE);
-
-        System.out.println("GAME OVER");
+        String text = "GAME OVER: ";
         if(userTeam.getTeamScore() >= maxPoints){
-            System.out.println("YOU WON");
+            text += "YOU WON";
         }
         else{
-            System.out.println("YOU LOST");
+            text += "YOU LOST";
         }
+        instructionText.setText(text);
     }
 
+    /**
+     * method to reset image buttons to original spot and have back of card image
+     */
     public void resetImageButtons(){
         //Reset Card/image buttons to original position
         imageButtonTL.animate().translationX(0).translationY(0);
@@ -758,12 +935,18 @@ public class GameScreen extends AppCompatActivity {
         resetOtherImageButtons();
     }
 
+    /**
+     * reset AIs' image buttons
+     */
     public void resetOtherImageButtons(){
         setCardImage(imageButtonOL, Suit.PASS, CardValue.NINE);
         setCardImage(imageButtonOF, Suit.PASS, CardValue.NINE);
         setCardImage(imageButtonOR, Suit.PASS, CardValue.NINE);
     }
 
+    /**
+     * For testing purposes, print the hands of all players
+     */
     private void printHands(){
         for(Player p:players){
             System.out.println("Player " + p.getPlayerNum());
