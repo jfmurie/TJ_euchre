@@ -23,7 +23,8 @@ public class testRound {
         userTeam = new Team(userPlayer, ai2);
         pureAITeam = new Team(ai1, ai3);
         testRound.awardPoints(userTeam, pureAITeam);
-        System.out.println("Team1/UserTeam should win and score points");
+//        System.out.println("Team1/UserTeam should win and score points");
+        Assert.assertEquals(userTeam.getTeamScore(), 2);
     }
 
     @Test

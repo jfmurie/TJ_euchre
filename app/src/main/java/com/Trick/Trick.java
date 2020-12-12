@@ -30,7 +30,7 @@ public class Trick {
      * This means that trump cards are valued more and non suit cards are less.
      * Then it returns the index of the card that wins the trick
      */
-    private int getCurrentWinningCardIndex(Suit trump){
+    public int getCurrentWinningCardIndex(Suit trump){
         int highestCardValue = 0;
         int index = 0;
         for(int i = 0; i < playedCards.size(); i++){
