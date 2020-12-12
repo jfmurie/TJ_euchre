@@ -293,9 +293,6 @@ public class GameScreen extends AppCompatActivity {
      * @param cardButton the button to be moved
      */
     public void moveCardToMiddle(ImageButton cardButton){
-        //currently this animation is unstable, sends cards all to different places
-        //current solution is to simply set the card to its new destination and forego the actual
-        //translation animation, as entertaining as it was
         //ObjectAnimator animatorX = ObjectAnimator.ofFloat(cardButton, "x", 400);
         //ObjectAnimator animatorY = ObjectAnimator.ofFloat(cardButton, "y", 380);
         //animatorX.setDuration(animationDuration);
